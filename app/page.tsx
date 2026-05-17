@@ -22,20 +22,6 @@ import type { ActiveWorkoutSession, Workout } from "@/types/workout";
 const emptyWorkouts: Workout[] = [];
 const emptyActiveSession: ActiveWorkoutSession | null = null;
 
-function formatGreeting() {
-  const hour = new Date().getHours();
-
-  if (hour < 12) {
-    return "Good morning";
-  }
-
-  if (hour < 17) {
-    return "Good afternoon";
-  }
-
-  return "Good evening";
-}
-
 function pluralize(count: number, singular: string, plural = `${singular}s`) {
   return count === 1 ? singular : plural;
 }
@@ -183,7 +169,7 @@ export default function HomePage() {
             LiftLog
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
-            {formatGreeting()}
+            Good afternoon
           </h1>
           <p className="mt-2 text-base font-semibold text-slate-600">
             {trainingSummary}
