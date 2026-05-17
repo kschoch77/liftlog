@@ -86,27 +86,27 @@ export function CloudSyncCard() {
   }
 
   return (
-    <section className="mt-5 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm">
+    <section className="mt-6 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-bold uppercase tracking-wide text-blue-600">
+          <p className="text-sm font-black text-slate-950">
             Cloud Sync
           </p>
-          <p className="mt-1 text-sm text-slate-500">{message}</p>
+          <p className="mt-1 text-xs font-semibold text-slate-500">{message}</p>
         </div>
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
-          <Cloud size={21} />
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-50 text-blue-600">
+          <Cloud size={18} />
         </div>
       </div>
 
       {!cloudConfigured ? (
-        <p className="mt-4 rounded-2xl bg-amber-50 p-3 text-sm font-medium text-amber-800">
+        <p className="mt-3 rounded-2xl bg-amber-50 p-3 text-sm font-medium text-amber-800">
           Supabase is not connected yet. Add your project URL and anon key to
           .env.local, then restart the app.
         </p>
       ) : user ? (
-        <div className="mt-4 space-y-3">
-          <p className="truncate text-sm font-semibold text-slate-700">
+        <div className="mt-3 space-y-3">
+          <p className="truncate text-xs font-semibold text-slate-600">
             Signed in as {user.email}
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -114,7 +114,7 @@ export function CloudSyncCard() {
               type="button"
               onClick={handleSyncNow}
               disabled={isBusy}
-              className="flex h-11 items-center justify-center gap-2 rounded-2xl bg-blue-600 text-sm font-bold text-white disabled:bg-blue-300"
+              className="flex h-10 items-center justify-center gap-2 rounded-2xl bg-blue-50 text-sm font-bold text-blue-700 disabled:text-blue-300"
             >
               <RefreshCw size={17} />
               Sync now
@@ -122,7 +122,7 @@ export function CloudSyncCard() {
             <button
               type="button"
               onClick={handleSignOut}
-              className="flex h-11 items-center justify-center gap-2 rounded-2xl bg-slate-100 text-sm font-bold text-slate-700"
+              className="flex h-10 items-center justify-center gap-2 rounded-2xl bg-slate-100 text-sm font-bold text-slate-700"
             >
               <LogOut size={17} />
               Sign out
@@ -130,14 +130,14 @@ export function CloudSyncCard() {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSignIn} className="mt-4 space-y-3">
+        <form onSubmit={handleSignIn} className="mt-3 space-y-3">
           <input
             type="email"
             autoComplete="email"
             placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="h-12 w-full rounded-2xl border border-slate-200 px-4 font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            className="h-11 w-full rounded-2xl border border-slate-200 px-4 text-sm font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
           />
           <input
             type="password"
@@ -145,13 +145,13 @@ export function CloudSyncCard() {
             placeholder="Password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="h-12 w-full rounded-2xl border border-slate-200 px-4 font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            className="h-11 w-full rounded-2xl border border-slate-200 px-4 text-sm font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
           />
           <div className="grid grid-cols-2 gap-2">
             <button
               type="submit"
               disabled={isBusy || !email || password.length < 6}
-              className="h-11 rounded-2xl bg-blue-600 text-sm font-bold text-white disabled:bg-blue-300"
+              className="h-10 rounded-2xl bg-blue-50 text-sm font-bold text-blue-700 disabled:text-blue-300"
             >
               Sign in
             </button>
@@ -159,7 +159,7 @@ export function CloudSyncCard() {
               type="button"
               onClick={handleSignUp}
               disabled={isBusy || !email || password.length < 6}
-              className="h-11 rounded-2xl bg-blue-50 text-sm font-bold text-blue-600 disabled:text-blue-300"
+              className="h-10 rounded-2xl bg-slate-100 text-sm font-bold text-slate-700 disabled:text-slate-300"
             >
               Create account
             </button>

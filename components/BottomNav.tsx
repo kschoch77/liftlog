@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, BarChart3, Dumbbell } from "lucide-react";
+import { BarChart3, Dumbbell, Home } from "lucide-react";
 
 const tabs = [
-  { href: "/", label: "Home", icon: Activity },
+  { href: "/", label: "Home", icon: Home },
   { href: "/workout", label: "Workout", icon: Dumbbell },
   { href: "/metrics", label: "Metrics", icon: BarChart3 },
 ];

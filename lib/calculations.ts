@@ -106,6 +106,13 @@ export function calculateWorkoutVolume(exercises: ExerciseEntry[]) {
   }, 0);
 }
 
+export function calculateWorkoutHardSetCount(workout: Workout) {
+  return workout.exercises.reduce(
+    (total, exercise) => total + exercise.sets.filter(isHardSet).length,
+    0,
+  );
+}
+
 export function getWorkoutMuscleGroups(workout: Workout) {
   const groups = workout.exercises
     .map((exercise) => exercise.primaryMuscleGroup)
@@ -203,6 +210,15 @@ export function calculateHardSetsByMuscleGroup(
       ...targetStatus,
     };
   });
+}
+
+export function calculateTopMuscleGroupThisWeek(
+  workouts: Workout[],
+  referenceDate = new Date(),
+) {
+  return [...calculateHardSetsByMuscleGroup(workouts, referenceDate)].sort(
+    (a, b) => b.hardSets - a.hardSets,
+  )[0];
 }
 
 export function calculateTotalHardSetsThisWeek(
