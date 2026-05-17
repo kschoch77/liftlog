@@ -183,15 +183,6 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Chest Fly",
-    "primaryMuscleGroup": "Chest",
-    "secondaryMuscleGroup": "Shoulders",
-    "sourceWeightType": "Stack",
-    "defaultWeightType": "weight",
-    "movementCategory": "Chest Fly",
-    "equipment": "Machine - Pin-loaded"
-  },
-  {
     "name": "Chest-supported Narrow-grip Row",
     "primaryMuscleGroup": "Back",
     "secondaryMuscleGroup": "Biceps",
@@ -253,15 +244,6 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
     "equipment": "Bench"
-  },
-  {
-    "name": "DB Lateral Raise",
-    "primaryMuscleGroup": "Shoulders",
-    "secondaryMuscleGroup": undefined,
-    "sourceWeightType": "Dumbbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Shoulder Abduction",
-    "equipment": "Free Area"
   },
   {
     "name": "DB Pullover",
@@ -471,15 +453,6 @@ export const exerciseCatalog = [
     "equipment": "Bench"
   },
   {
-    "name": "Incline DB Curl",
-    "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
-    "sourceWeightType": "Dumbbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Bicep Curl",
-    "equipment": "Bench"
-  },
-  {
     "name": "Incline Machine Chest Press",
     "primaryMuscleGroup": "Chest",
     "secondaryMuscleGroup": "Triceps",
@@ -496,15 +469,6 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Chest Press",
     "equipment": "Machine - Plate-loaded"
-  },
-  {
-    "name": "Lat Pull-down",
-    "primaryMuscleGroup": "Lats",
-    "secondaryMuscleGroup": "Biceps",
-    "sourceWeightType": "Stack",
-    "defaultWeightType": "weight",
-    "movementCategory": "Vertical Pull",
-    "equipment": "Machine - Pin-loaded"
   },
   {
     "name": "Lateral Raise / Shoulder Fly",
@@ -667,15 +631,6 @@ export const exerciseCatalog = [
     "defaultWeightType": "bodyweight",
     "movementCategory": "Chest Press",
     "equipment": "Free Area"
-  },
-  {
-    "name": "Reverse Fly",
-    "primaryMuscleGroup": "Shoulders",
-    "secondaryMuscleGroup": "Back",
-    "sourceWeightType": "Stack",
-    "defaultWeightType": "weight",
-    "movementCategory": "Reverse Fly",
-    "equipment": "Machine - Pin-loaded"
   },
   {
     "name": "Reverse Lunge",

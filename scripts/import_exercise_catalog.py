@@ -4,7 +4,7 @@ from pathlib import Path
 import openpyxl
 
 
-SOURCE_PATH = Path(r"C:\Users\schoc\Downloads\Exercise List and Mapping.xlsx")
+SOURCE_PATH = Path(r"C:\Users\schoc\Downloads\Exercise List and Mapping (1).xlsx")
 OUTPUT_PATH = Path(r"C:\Users\schoc\liftlog\lib\exerciseCatalog.ts")
 
 MUSCLE_GROUP_MAP = {

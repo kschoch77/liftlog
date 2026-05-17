@@ -169,7 +169,7 @@ export default function HomePage() {
             LiftLog
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
-            Good afternoon
+            Ready to train
           </h1>
           <p className="mt-2 text-base font-semibold text-slate-600">
             {trainingSummary}
