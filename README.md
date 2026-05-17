@@ -2,6 +2,8 @@
 
 Current version: v1.2
 
+Live app: https://liftlog-weld.vercel.app/
+
 LiftLog is a mobile-first, iPhone-style workout tracker for logging lifts,
 reviewing strength progress, and keeping simple evidence-based training metrics.
 It stores data locally by default and can optionally sync completed workouts to
