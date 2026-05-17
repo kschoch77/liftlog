@@ -1,9 +1,11 @@
 import type { MuscleGroup, WeightType } from "@/types/workout";
 
+export type SecondaryMuscleGroup = MuscleGroup | "Forearms";
+
 export type ExerciseCatalogEntry = {
   name: string;
   primaryMuscleGroup?: MuscleGroup;
-  secondaryMuscleGroup?: MuscleGroup;
+  secondaryMuscleGroup?: SecondaryMuscleGroup;
   sourceWeightType?: string;
   defaultWeightType: WeightType;
   movementCategory?: string;
@@ -68,7 +70,7 @@ export const exerciseCatalog = [
   {
     "name": "Bayesian Bicep Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -122,7 +124,7 @@ export const exerciseCatalog = [
   {
     "name": "Cable Bicep Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -221,7 +223,7 @@ export const exerciseCatalog = [
   {
     "name": "Concentration Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Dumbbell",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -230,7 +232,7 @@ export const exerciseCatalog = [
   {
     "name": "DB Bicep Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Dumbbell",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -239,7 +241,7 @@ export const exerciseCatalog = [
   {
     "name": "DB Incline Bicep Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Dumbbell",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -320,7 +322,7 @@ export const exerciseCatalog = [
   {
     "name": "EZ Bar Bicep Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Barbell",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -419,7 +421,7 @@ export const exerciseCatalog = [
   {
     "name": "Hammer Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Dumbbell",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
@@ -608,7 +610,7 @@ export const exerciseCatalog = [
   {
     "name": "Preacher Curl",
     "primaryMuscleGroup": "Biceps",
-    "secondaryMuscleGroup": undefined,
+    "secondaryMuscleGroup": "Forearms",
     "sourceWeightType": "Barbell",
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",

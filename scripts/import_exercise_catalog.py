@@ -19,6 +19,7 @@ MUSCLE_GROUP_MAP = {
     "Hamstrings": "Hamstrings",
     "Glutes/Hips": "Glutes",
     "Calves": "Calves",
+    "Forearms": "Forearms",
 }
 
 
@@ -76,10 +77,12 @@ def main():
             [
                 'import type { MuscleGroup, WeightType } from "@/types/workout";',
                 "",
+                'export type SecondaryMuscleGroup = MuscleGroup | "Forearms";',
+                "",
                 "export type ExerciseCatalogEntry = {",
                 "  name: string;",
                 "  primaryMuscleGroup?: MuscleGroup;",
-                "  secondaryMuscleGroup?: MuscleGroup;",
+                "  secondaryMuscleGroup?: SecondaryMuscleGroup;",
                 "  sourceWeightType?: string;",
                 "  defaultWeightType: WeightType;",
                 "  movementCategory?: string;",
