@@ -12,7 +12,7 @@ import {
   syncWorkouts,
 } from "@/lib/cloudSync";
 import { isCloudConfigured } from "@/lib/supabase";
-import { subscribeToStorage } from "@/lib/storage";
+import { subscribeToWorkoutHistoryStorage } from "@/lib/storage";
 
 export function CloudSyncCard() {
   const [user, setUser] = useState<User | null>(null);
@@ -50,7 +50,7 @@ export function CloudSyncCard() {
       return () => {};
     }
 
-    return subscribeToStorage(() => {
+    return subscribeToWorkoutHistoryStorage(() => {
       void syncWorkouts().then((result) => setMessage(result.message));
     });
   }, [user]);

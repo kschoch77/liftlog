@@ -27,6 +27,7 @@ function createSet(): SetEntry {
     reps: 0,
     completed: false,
     weightType: "weight",
+    includesBarWeight: true,
   };
 }
 

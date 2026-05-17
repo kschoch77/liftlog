@@ -43,8 +43,11 @@ function formatPreviousSet(set?: SetEntry) {
     return `-${set.weight} x ${set.reps}`;
   }
 
-  if (set.weight > 0) {
-    return `${set.weight} x ${set.reps}`;
+  const totalWeight =
+    set.includesBarWeight === false ? set.weight + (set.barWeight ?? 0) : set.weight;
+
+  if (totalWeight > 0) {
+    return `${totalWeight} x ${set.reps}`;
   }
 
   return `0 x ${set.reps}`;
@@ -77,6 +80,8 @@ export function SetRow({
       weightType: nextType,
       weight: nextType === "weight" || nextType === "assistance" ? set.weight : 0,
       band: nextType === "band" ? set.band ?? bandOptions[0] : undefined,
+      includesBarWeight: nextType === "weight" ? set.includesBarWeight ?? true : undefined,
+      barWeight: nextType === "weight" ? set.barWeight : undefined,
       isPR: false,
     });
   }
@@ -181,7 +186,7 @@ export function SetRow({
       </div>
 
       {weightType === "weight" || weightType === "assistance" ? (
-        <div className="px-2 pb-2">
+        <div className="space-y-2 px-2 pb-2">
           <label className="sr-only" htmlFor={`${set.id}-weight`}>
             Pounds
           </label>
@@ -201,6 +206,51 @@ export function SetRow({
             }
             className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
           />
+          {weightType === "weight" ? (
+            <div className="rounded-xl border border-slate-100 bg-slate-50 p-2">
+              <label className="flex items-center justify-between gap-3 text-sm font-bold text-slate-700">
+                <span>Includes bar weight</span>
+                <input
+                  type="checkbox"
+                  checked={set.includesBarWeight ?? true}
+                  onChange={(event) =>
+                    onChange({
+                      ...set,
+                      includesBarWeight: event.target.checked,
+                      isPR: false,
+                    })
+                  }
+                  className="h-5 w-5 rounded border-slate-300 text-blue-600"
+                />
+              </label>
+              {set.includesBarWeight === false ? (
+                <div className="mt-2">
+                  <label
+                    className="sr-only"
+                    htmlFor={`${set.id}-bar-weight`}
+                  >
+                    Bar weight
+                  </label>
+                  <input
+                    id={`${set.id}-bar-weight`}
+                    inputMode="decimal"
+                    pattern="[0-9]*"
+                    type="text"
+                    placeholder="Bar lbs"
+                    value={set.barWeight || ""}
+                    onChange={(event) =>
+                      onChange({
+                        ...set,
+                        barWeight: numberFromInput(event.target.value),
+                        isPR: false,
+                      })
+                    }
+                    className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                  />
+                </div>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       ) : null}
 

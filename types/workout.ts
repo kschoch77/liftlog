@@ -43,6 +43,8 @@ export type SetEntry = {
   isPR?: boolean;
   weightType?: WeightType;
   band?: BandOption;
+  includesBarWeight?: boolean;
+  barWeight?: number;
 };
 
 export type ExerciseEntry = {
@@ -63,6 +65,12 @@ export type Workout = {
 export type WorkoutDraft = {
   exercises: ExerciseEntry[];
   updatedAt: string;
+};
+
+export type ActiveWorkoutSession = {
+  startedAt: string;
+  updatedAt: string;
+  exercises: ExerciseEntry[];
 };
 
 export type ExerciseHistory = {

@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ClipboardList, Plus, Save, Trophy, X } from "lucide-react";
-import { FormEvent, useMemo, useState, useSyncExternalStore } from "react";
+import { ClipboardList, Save, Trophy, X } from "lucide-react";
+import { useMemo, useSyncExternalStore } from "react";
 import { ExerciseCard } from "@/components/ExerciseCard";
+import { ExercisePicker } from "@/components/ExercisePicker";
 import {
   calculateWorkoutVolume,
   countsTowardWeightMetrics,
@@ -11,34 +12,51 @@ import {
   findPreviousBest,
   findPreviousSets,
 } from "@/lib/calculations";
+import type { ExerciseCatalogEntry } from "@/lib/exerciseCatalog";
 import { createId } from "@/lib/id";
 import {
+  clearActiveWorkoutSession,
+  clearWorkoutDraft,
+  getActiveWorkoutSession,
   getExerciseNames,
   getWorkoutDraft,
   getWorkouts,
-  clearWorkoutDraft,
+  saveActiveWorkoutSession,
   saveExerciseName,
   saveWorkout,
   saveWorkoutDraft,
   subscribeToStorage,
 } from "@/lib/storage";
-import type { ExerciseEntry, PRRecord, SetEntry, Workout, WorkoutDraft } from "@/types/workout";
+import type {
+  ExerciseEntry,
+  PRRecord,
+  SetEntry,
+  Workout,
+  WorkoutDraft,
+} from "@/types/workout";
 
 const emptyExerciseNames: string[] = [];
 const emptyWorkouts: Workout[] = [];
 const emptyDraft: WorkoutDraft | null = null;
+const emptyActiveSession = null;
+const emptyExercises: ExerciseEntry[] = [];
 
-function createExercise(name: string): ExerciseEntry {
+function createExercise(
+  name: string,
+  catalogEntry?: ExerciseCatalogEntry,
+): ExerciseEntry {
   return {
     id: createId("exercise"),
     name,
+    primaryMuscleGroup: catalogEntry?.primaryMuscleGroup,
     sets: [
       {
         id: createId("set"),
         weight: 0,
         reps: 0,
         completed: false,
-        weightType: "weight",
+        weightType: catalogEntry?.defaultWeightType ?? "weight",
+        includesBarWeight: true,
       },
     ],
   };
@@ -67,8 +85,6 @@ function sanitizeDraftExercises(exercises: ExerciseEntry[]) {
 
 export default function WorkoutPage() {
   const router = useRouter();
-  const [exerciseName, setExerciseName] = useState("");
-  const [exercises, setExercises] = useState<ExerciseEntry[]>([]);
   const exerciseNames = useSyncExternalStore(
     subscribeToStorage,
     getExerciseNames,
@@ -84,6 +100,12 @@ export default function WorkoutPage() {
     getWorkoutDraft,
     () => emptyDraft,
   );
+  const activeSession = useSyncExternalStore(
+    subscribeToStorage,
+    getActiveWorkoutSession,
+    () => emptyActiveSession,
+  );
+  const exercises = activeSession?.exercises ?? emptyExercises;
 
   const currentPRs = useMemo(() => {
     const prs: Record<string, PRRecord | undefined> = {};
@@ -109,17 +131,23 @@ export default function WorkoutPage() {
     0,
   );
 
-  function addExercise(event: FormEvent) {
-    event.preventDefault();
-    const trimmedName = exerciseName.trim();
+  function updateExercises(nextExercises: ExerciseEntry[]) {
+    saveActiveWorkoutSession({
+      startedAt: activeSession?.startedAt ?? new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      exercises: nextExercises,
+    });
+  }
+
+  function addExercise(name: string, catalogEntry?: ExerciseCatalogEntry) {
+    const trimmedName = name.trim();
 
     if (!trimmedName) {
       return;
     }
 
     saveExerciseName(trimmedName);
-    setExercises((current) => [...current, createExercise(trimmedName)]);
-    setExerciseName("");
+    updateExercises([...exercises, createExercise(trimmedName, catalogEntry)]);
   }
 
   function finishWorkout() {
@@ -149,6 +177,7 @@ export default function WorkoutPage() {
 
     saveWorkout(workout);
     clearWorkoutDraft();
+    clearActiveWorkoutSession();
     router.push("/");
   }
 
@@ -171,7 +200,7 @@ export default function WorkoutPage() {
       return;
     }
 
-    setExercises(
+    updateExercises(
       workoutDraft.exercises.map((exercise) => ({
         ...exercise,
         id: createId("exercise"),
@@ -206,33 +235,10 @@ export default function WorkoutPage() {
         </div>
       </header>
 
-      <form onSubmit={addExercise} className="mt-5 rounded-3xl bg-white p-3 shadow-sm">
-        <label className="sr-only" htmlFor="exercise-name">
-          Exercise name
-        </label>
-        <div className="flex gap-2">
-          <input
-            id="exercise-name"
-            list="exercise-suggestions"
-            placeholder="Add exercise"
-            value={exerciseName}
-            onChange={(event) => setExerciseName(event.target.value)}
-            className="h-12 min-w-0 flex-1 rounded-2xl border border-slate-200 px-4 font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-          />
-          <datalist id="exercise-suggestions">
-            {exerciseNames.map((name) => (
-              <option key={name} value={name} />
-            ))}
-          </datalist>
-          <button
-            type="submit"
-            aria-label="Add exercise"
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-600 text-white"
-          >
-            <Plus size={22} />
-          </button>
-        </div>
-      </form>
+      <ExercisePicker
+        customExerciseNames={exerciseNames}
+        onAddExercise={addExercise}
+      />
 
       {workoutDraft ? (
         <section className="mt-4 rounded-3xl border border-blue-100 bg-blue-50 p-4">
@@ -275,15 +281,15 @@ export default function WorkoutPage() {
               previousBest={currentPRs[exercise.id]}
               previousSets={previousSetsByExercise[exercise.id]}
               onChange={(updatedExercise) =>
-                setExercises((current) =>
-                  current.map((item) =>
+                updateExercises(
+                  exercises.map((item) =>
                     item.id === updatedExercise.id ? updatedExercise : item,
                   ),
                 )
               }
               onRemove={() =>
-                setExercises((current) =>
-                  current.filter((item) => item.id !== exercise.id),
+                updateExercises(
+                  exercises.filter((item) => item.id !== exercise.id),
                 )
               }
             />
@@ -293,7 +299,7 @@ export default function WorkoutPage() {
             <Trophy className="mx-auto text-blue-500" size={32} />
             <p className="mt-3 font-bold text-slate-950">Add your first exercise</p>
             <p className="mt-1 text-sm text-slate-500">
-              Type a lift name above to start logging sets.
+              Search the catalog or add your own exercise to start logging sets.
             </p>
           </div>
         )}

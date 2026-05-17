@@ -16,9 +16,21 @@ export function countsTowardWeightMetrics(set: SetEntry) {
     set.completed &&
     !set.isWarmup &&
     getSetWeightType(set) === "weight" &&
-    set.weight > 0 &&
+    getEffectiveSetWeight(set) > 0 &&
     set.reps > 0
   );
+}
+
+export function getEffectiveSetWeight(set: SetEntry) {
+  if (getSetWeightType(set) !== "weight") {
+    return 0;
+  }
+
+  if (set.includesBarWeight === false) {
+    return set.weight + (set.barWeight ?? 0);
+  }
+
+  return set.weight;
 }
 
 export function estimateOneRepMax(weight: number, reps: number) {
@@ -39,7 +51,7 @@ export function calculateWorkoutVolume(exercises: ExerciseEntry[]) {
         return setTotal;
       }
 
-      return setTotal + set.weight * set.reps;
+      return setTotal + getEffectiveSetWeight(set) * set.reps;
     }, 0);
 
     return workoutTotal + exerciseVolume;
@@ -64,14 +76,15 @@ export function calculateExercisePRs(workouts: Workout[]) {
           return;
         }
 
-        const estimatedOneRepMax = estimateOneRepMax(set.weight, set.reps);
+        const effectiveWeight = getEffectiveSetWeight(set);
+        const estimatedOneRepMax = estimateOneRepMax(effectiveWeight, set.reps);
         const currentBest = bestByExercise[exercise.name];
 
         if (!currentBest || estimatedOneRepMax > currentBest.estimatedOneRepMax) {
           bestByExercise[exercise.name] = {
             id: `${workout.id}-${exercise.id}-${set.id}`,
             exerciseName: exercise.name,
-            weight: set.weight,
+            weight: effectiveWeight,
             reps: set.reps,
             estimatedOneRepMax,
             date: workout.date,
@@ -134,7 +147,8 @@ export function findNewPRs(
     let bestBefore = findPreviousBest(savedWorkouts, exercise.name);
 
     exercise.sets.forEach((set) => {
-      const estimatedOneRepMax = estimateOneRepMax(set.weight, set.reps);
+      const effectiveWeight = getEffectiveSetWeight(set);
+      const estimatedOneRepMax = estimateOneRepMax(effectiveWeight, set.reps);
 
       if (
         countsTowardWeightMetrics(set) &&
@@ -144,7 +158,7 @@ export function findNewPRs(
         const pr = {
           id: `${exercise.id}-${set.id}`,
           exerciseName: exercise.name,
-          weight: set.weight,
+          weight: effectiveWeight,
           reps: set.reps,
           estimatedOneRepMax,
           date: workoutDate,
@@ -172,7 +186,8 @@ export function getRecentPRs(workouts: Workout[]) {
             return;
           }
 
-          const estimatedOneRepMax = estimateOneRepMax(set.weight, set.reps);
+          const effectiveWeight = getEffectiveSetWeight(set);
+          const estimatedOneRepMax = estimateOneRepMax(effectiveWeight, set.reps);
           const currentBest = bestByExercise[exercise.name];
 
           if (
@@ -182,7 +197,7 @@ export function getRecentPRs(workouts: Workout[]) {
             const pr = {
               id: `${workout.id}-${exercise.id}-${set.id}`,
               exerciseName: exercise.name,
-              weight: set.weight,
+              weight: effectiveWeight,
               reps: set.reps,
               estimatedOneRepMax,
               date: workout.date,
@@ -276,7 +291,7 @@ export function getCurrentWeekMuscleGroupVolume(workouts: Workout[]) {
             return sum;
           }
 
-          return sum + set.weight * set.reps;
+          return sum + getEffectiveSetWeight(set) * set.reps;
         }, 0);
 
         totals.set(
@@ -310,9 +325,9 @@ export function getExerciseOneRepMaxProgress(
       const bestSet = exercise.sets
         .filter(countsTowardWeightMetrics)
         .map((set) => ({
-          weight: set.weight,
+          weight: getEffectiveSetWeight(set),
           reps: set.reps,
-          value: estimateOneRepMax(set.weight, set.reps),
+          value: estimateOneRepMax(getEffectiveSetWeight(set), set.reps),
         }))
         .sort((a, b) => b.value - a.value)[0];
 
