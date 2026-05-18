@@ -33,13 +33,15 @@ export function ExercisePicker({
   const [query, setQuery] = useState("");
   const trimmedQuery = query.trim();
   const options = useMemo(() => {
+    if (!trimmedQuery) {
+      return [];
+    }
+
     const catalogNames = exerciseCatalog.map((exercise) => exercise.name);
     const allNames = uniqueNames([...catalogNames, ...customExerciseNames]);
     const normalizedQuery = trimmedQuery.toLowerCase();
 
-    return allNames
-      .filter((name) => name.toLowerCase().includes(normalizedQuery))
-      .slice(0, 8);
+    return allNames.filter((name) => name.toLowerCase().includes(normalizedQuery));
   }, [customExerciseNames, trimmedQuery]);
   const exactMatch = options.some(
     (name) => name.toLowerCase() === trimmedQuery.toLowerCase(),

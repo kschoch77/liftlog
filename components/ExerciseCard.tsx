@@ -3,6 +3,7 @@
 import { Plus, Trash2 } from "lucide-react";
 import { SetRow } from "@/components/SetRow";
 import { countsTowardWeightMetrics, estimateOneRepMax } from "@/lib/calculations";
+import { findCatalogExercise } from "@/lib/exerciseCatalog";
 import { createId } from "@/lib/id";
 import {
   muscleGroups,
@@ -20,14 +21,34 @@ type ExerciseCardProps = {
   onRemove: () => void;
 };
 
-function createSet(): SetEntry {
+function isBarbellExerciseName(name: string) {
+  return findCatalogExercise(name)?.sourceWeightType === "Barbell";
+}
+
+function createSet(isBarbellExercise: boolean): SetEntry {
   return {
     id: createId("set"),
     weight: 0,
     reps: 0,
     completed: false,
     weightType: "weight",
-    includesBarWeight: true,
+    includesBarWeight: isBarbellExercise ? true : undefined,
+  };
+}
+
+function normalizeBarWeightFields(set: SetEntry, isBarbellExercise: boolean) {
+  if ((set.weightType ?? "weight") !== "weight" || !isBarbellExercise) {
+    return {
+      ...set,
+      includesBarWeight: undefined,
+      barWeight: undefined,
+    };
+  }
+
+  return {
+    ...set,
+    includesBarWeight: set.includesBarWeight ?? true,
+    barWeight: set.includesBarWeight === false ? set.barWeight : undefined,
   };
 }
 
@@ -38,12 +59,30 @@ export function ExerciseCard({
   onChange,
   onRemove,
 }: ExerciseCardProps) {
+  const isBarbellExercise = isBarbellExerciseName(exercise.name);
+
   function updateSet(updatedSet: SetEntry) {
+    const normalizedSet = normalizeBarWeightFields(
+      updatedSet,
+      isBarbellExercise,
+    );
     const nextSets = exercise.sets.map((set) =>
-      set.id === updatedSet.id ? updatedSet : set,
+      set.id === updatedSet.id ? normalizedSet : set,
     );
 
     onChange({ ...exercise, sets: markPRs(nextSets) });
+  }
+
+  function updateExerciseName(name: string) {
+    const nextIsBarbellExercise = isBarbellExerciseName(name);
+
+    onChange({
+      ...exercise,
+      name,
+      sets: exercise.sets.map((set) =>
+        normalizeBarWeightFields(set, nextIsBarbellExercise),
+      ),
+    });
   }
 
   function removeSet(setId: string) {
@@ -82,9 +121,7 @@ export function ExerciseCard({
             id={`${exercise.id}-name`}
             type="text"
             value={exercise.name}
-            onChange={(event) =>
-              onChange({ ...exercise, name: event.target.value })
-            }
+            onChange={(event) => updateExerciseName(event.target.value)}
             className="h-10 w-full rounded-2xl border border-transparent bg-blue-50 px-3 text-lg font-black tracking-tight text-blue-600 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
           />
           <p className="mt-1 text-sm text-slate-500">
@@ -150,6 +187,7 @@ export function ExerciseCard({
                 .filter((currentSet) => !currentSet.isWarmup).length || 1
             }
             previousSet={previousSets[index]}
+            isBarbellExercise={isBarbellExercise}
             onChange={updateSet}
             onRemove={() => removeSet(set.id)}
           />
@@ -159,7 +197,10 @@ export function ExerciseCard({
       <button
         type="button"
         onClick={() =>
-          onChange({ ...exercise, sets: markPRs([...exercise.sets, createSet()]) })
+          onChange({
+            ...exercise,
+            sets: markPRs([...exercise.sets, createSet(isBarbellExercise)]),
+          })
         }
         className="m-2 flex h-11 w-[calc(100%-1rem)] items-center justify-center gap-2 rounded-2xl bg-slate-100 font-bold text-slate-800"
       >

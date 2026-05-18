@@ -237,7 +237,7 @@ export default function HomePage() {
               Recent Workouts
             </h2>
             <Link href="/metrics" className="text-sm font-bold text-blue-600">
-              Metrics
+              My Metrics
             </Link>
           </div>
 

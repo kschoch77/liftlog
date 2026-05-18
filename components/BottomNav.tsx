@@ -7,7 +7,7 @@ import { BarChart3, Dumbbell, Home } from "lucide-react";
 const tabs = [
   { href: "/", label: "Home", icon: Home },
   { href: "/workout", label: "Workout", icon: Dumbbell },
-  { href: "/metrics", label: "Metrics", icon: BarChart3 },
+  { href: "/metrics", label: "My Metrics", icon: BarChart3 },
 ];
 
 export function BottomNav() {

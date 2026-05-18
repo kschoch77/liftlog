@@ -56,7 +56,8 @@ function createExercise(
         reps: 0,
         completed: false,
         weightType: catalogEntry?.defaultWeightType ?? "weight",
-        includesBarWeight: true,
+        includesBarWeight:
+          catalogEntry?.sourceWeightType === "Barbell" ? true : undefined,
       },
     ],
   };

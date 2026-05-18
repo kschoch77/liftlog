@@ -1,6 +1,6 @@
 # LiftLog
 
-Current version: v1.3
+Current version: v1.4
 
 Live app: https://liftlog-weld.vercel.app/
 
@@ -21,7 +21,7 @@ Supabase.
 
 ## Core Features
 
-- Home dashboard, Workout, and Metrics tabs
+- Home dashboard, Workout, and My Metrics tabs
 - Mobile-first workout flow
 - Historical workout editor
 - Exercise catalog with custom exercise names
@@ -35,12 +35,13 @@ Supabase.
 - Mark warm-up sets
 - Track weight, reps, and notes
 - Support weight, bodyweight, assistance, and band set types
-- Handle bar weight when the entered plate weight excludes the bar
+- Show the bar-weight tracking checkbox only for mapped barbell exercises
+- Keep bar-weight tracking as a reminder of how the set weight was logged
 - Recalculate volume and PRs after historical workout edits
 
 ## Home Dashboard
 
-The v1.3 Home tab is focused on fast training context:
+The Home tab is focused on fast training context:
 
 - Greeting and weekly training snapshot
 - Start Workout or Resume Workout primary action
@@ -49,9 +50,9 @@ The v1.3 Home tab is focused on fast training context:
   and PR count
 - Compact Cloud Sync controls near the bottom of the page
 
-## Metrics
+## My Metrics
 
-The Metrics tab is focused on strength and hypertrophy signals:
+The My Metrics tab is focused on strength and hypertrophy signals:
 
 - Weekly hard sets by muscle group
 - Default muscle-group target ranges

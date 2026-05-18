@@ -267,11 +267,8 @@ export default function MetricsPage() {
       <header className="pt-2">
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm font-bold uppercase tracking-wide text-blue-600">
-            Metrics
+            My Metrics
           </p>
-          <span className="rounded-full bg-blue-50 px-2 py-1 text-xs font-black text-blue-700">
-            v1.2
-          </span>
         </div>
         <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
           Lifter dashboard
