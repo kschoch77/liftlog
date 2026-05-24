@@ -31,31 +31,36 @@ function formatPreviousSet(set?: SetEntry) {
   }
 
   const weightType = set.weightType ?? "weight";
+  const rirLabel = set.rir === undefined ? "" : `, RIR ${set.rir}`;
 
   if (weightType === "bodyweight") {
-    return `BW x ${set.reps}`;
+    return `BW x ${set.reps}${rirLabel}`;
   }
 
   if (weightType === "band") {
-    return `${set.band ?? "Band"} x ${set.reps}`;
+    return `${set.band ?? "Band"} x ${set.reps}${rirLabel}`;
   }
 
   if (weightType === "assistance" && set.weight > 0) {
-    return `-${set.weight} x ${set.reps}`;
+    return `-${set.weight} x ${set.reps}${rirLabel}`;
   }
 
   const totalWeight =
     set.includesBarWeight === false ? set.weight + (set.barWeight ?? 0) : set.weight;
 
   if (totalWeight > 0) {
-    return `${totalWeight} x ${set.reps}`;
+    return `${totalWeight} x ${set.reps}${rirLabel}`;
   }
 
-  return `0 x ${set.reps}`;
+  return `0 x ${set.reps}${rirLabel}`;
 }
 
 function numberFromInput(value: string) {
   return value === "" ? 0 : Number(value);
+}
+
+function optionalNumberFromInput(value: string) {
+  return value === "" ? undefined : Number(value);
 }
 
 export function SetRow({
@@ -193,25 +198,45 @@ export function SetRow({
 
       {weightType === "weight" || weightType === "assistance" ? (
         <div className="space-y-2 px-2 pb-2">
-          <label className="sr-only" htmlFor={`${set.id}-weight`}>
-            Pounds
-          </label>
-          <input
-            id={`${set.id}-weight`}
-            inputMode="decimal"
-            pattern="[0-9]*"
-            type="text"
-            placeholder={weightType === "assistance" ? "-lbs" : "lbs"}
-            value={set.weight || ""}
-            onChange={(event) =>
-              onChange({
-                ...set,
-                weight: numberFromInput(event.target.value),
-                isPR: false,
-              })
-            }
-            className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-          />
+          <div className="grid grid-cols-[1fr_5rem] gap-2">
+            <label className="sr-only" htmlFor={`${set.id}-weight`}>
+              Pounds
+            </label>
+            <input
+              id={`${set.id}-weight`}
+              inputMode="decimal"
+              pattern="[0-9]*"
+              type="text"
+              placeholder={weightType === "assistance" ? "-lbs" : "lbs"}
+              value={set.weight || ""}
+              onChange={(event) =>
+                onChange({
+                  ...set,
+                  weight: numberFromInput(event.target.value),
+                  isPR: false,
+                })
+              }
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            />
+            <label className="sr-only" htmlFor={`${set.id}-rir`}>
+              Reps in reserve
+            </label>
+            <input
+              id={`${set.id}-rir`}
+              inputMode="decimal"
+              pattern="[0-9]*"
+              type="text"
+              placeholder="RIR"
+              value={set.rir ?? ""}
+              onChange={(event) =>
+                onChange({
+                  ...set,
+                  rir: optionalNumberFromInput(event.target.value),
+                })
+              }
+              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            />
+          </div>
           {weightType === "weight" && isBarbellExercise ? (
             <div className="rounded-xl border border-slate-100 bg-slate-50 p-2">
               <label className="flex items-center justify-between gap-3 text-sm font-bold text-slate-700">
@@ -236,7 +261,7 @@ export function SetRow({
       ) : null}
 
       {weightType === "band" ? (
-        <div className="px-2 pb-2">
+        <div className="grid grid-cols-[1fr_5rem] gap-2 px-2 pb-2">
           <label className="sr-only" htmlFor={`${set.id}-band`}>
             Band
           </label>
@@ -259,6 +284,47 @@ export function SetRow({
               </option>
             ))}
           </select>
+          <label className="sr-only" htmlFor={`${set.id}-band-rir`}>
+            Reps in reserve
+          </label>
+          <input
+            id={`${set.id}-band-rir`}
+            inputMode="decimal"
+            pattern="[0-9]*"
+            type="text"
+            placeholder="RIR"
+            value={set.rir ?? ""}
+            onChange={(event) =>
+              onChange({
+                ...set,
+                rir: optionalNumberFromInput(event.target.value),
+              })
+            }
+            className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+          />
+        </div>
+      ) : null}
+
+      {weightType === "bodyweight" ? (
+        <div className="px-2 pb-2">
+          <label className="sr-only" htmlFor={`${set.id}-bodyweight-rir`}>
+            Reps in reserve
+          </label>
+          <input
+            id={`${set.id}-bodyweight-rir`}
+            inputMode="decimal"
+            pattern="[0-9]*"
+            type="text"
+            placeholder="RIR"
+            value={set.rir ?? ""}
+            onChange={(event) =>
+              onChange({
+                ...set,
+                rir: optionalNumberFromInput(event.target.value),
+              })
+            }
+            className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+          />
         </div>
       ) : null}
 

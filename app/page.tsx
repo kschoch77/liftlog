@@ -81,10 +81,6 @@ function formatWorkoutMuscles(workout: Workout) {
   return "Muscle groups not set";
 }
 
-function formatWorkoutVolume(workout: Workout) {
-  return `${workout.totalVolume.toLocaleString()} lbs`;
-}
-
 function buildTrainingSummary({
   workoutCount,
   hardSets,
@@ -102,14 +98,14 @@ function buildTrainingSummary({
 
   if (workoutCount === 0) {
     return recentPRs > 0
-      ? `No workouts this week • ${recentPRs} recent ${pluralize(recentPRs, "PR")}`
-      : "No workouts this week";
+      ? `No workouts in the trailing 7 days • ${recentPRs} recent ${pluralize(recentPRs, "PR")}`
+      : "No workouts in the trailing 7 days";
   }
 
   return `${workoutCount} ${pluralize(
     workoutCount,
     "workout",
-  )} this week • ${hardSets} hard ${pluralize(hardSets, "set")}`;
+  )} in 7 days • ${hardSets} hard ${pluralize(hardSets, "set")}`;
 }
 
 function DashboardMetricCard({
@@ -204,12 +200,12 @@ export default function HomePage() {
             <DashboardMetricCard
               label="Workouts"
               value={weeklyCount}
-              detail="this week"
+              detail="trailing 7 days"
             />
             <DashboardMetricCard
               label="Hard Sets"
               value={weeklyHardSets}
-              detail="this week"
+              detail="trailing 7 days"
             />
             <DashboardMetricCard
               label="Top Muscle"
@@ -263,8 +259,7 @@ export default function HomePage() {
                       {formatWorkoutMuscles(workout)}
                     </p>
                     <p className="mt-3 text-sm font-bold text-blue-700">
-                      {hardSets} hard {pluralize(hardSets, "set")} •{" "}
-                      {formatWorkoutVolume(workout)} • {prCount}{" "}
+                      {hardSets} hard {pluralize(hardSets, "set")} • {prCount}{" "}
                       {pluralize(prCount, "PR")}
                     </p>
                   </Link>

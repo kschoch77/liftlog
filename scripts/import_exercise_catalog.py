@@ -4,20 +4,21 @@ from pathlib import Path
 import openpyxl
 
 
-SOURCE_PATH = Path(r"C:\Users\schoc\Downloads\Exercise List and Mapping (1).xlsx")
+SOURCE_PATH = Path(r"C:\Users\schoc\Downloads\Exercise List and Mapping.xlsx")
 OUTPUT_PATH = Path(r"C:\Users\schoc\liftlog\lib\exerciseCatalog.ts")
 
 MUSCLE_GROUP_MAP = {
     "Chest": "Chest",
-    "Back": "Back",
+    "Mid-Back": "Mid-Back",
     "Lats": "Lats",
     "Abs": "Abs",
+    "Shoulders": "Shoulders",
     "Delts": "Shoulders",
     "Biceps": "Biceps",
     "Triceps": "Triceps",
     "Quads": "Quads",
     "Hamstrings": "Hamstrings",
-    "Glutes/Hips": "Glutes",
+    "Glutes/Hips": "Glutes/Hips",
     "Calves": "Calves",
     "Forearms": "Forearms",
 }
@@ -43,7 +44,7 @@ def default_weight_type(source_weight_type):
 
 def main():
     workbook = openpyxl.load_workbook(SOURCE_PATH, read_only=True, data_only=True)
-    sheet = workbook["Sheet1"]
+    sheet = workbook["Exercise List and Mapping"]
     rows = []
     seen_names = set()
 
@@ -58,7 +59,7 @@ def main():
             {
                 "name": name,
                 "primaryMuscleGroup": muscle_group(row[13]),
-                "secondaryMuscleGroup": muscle_group(row[14])
+                "additionalPrimaryMuscleGroup": muscle_group(row[14])
                 if len(row) > 14
                 else None,
                 "sourceWeightType": source_weight_type,
@@ -77,12 +78,10 @@ def main():
             [
                 'import type { MuscleGroup, WeightType } from "@/types/workout";',
                 "",
-                'export type SecondaryMuscleGroup = MuscleGroup | "Forearms";',
-                "",
                 "export type ExerciseCatalogEntry = {",
                 "  name: string;",
                 "  primaryMuscleGroup?: MuscleGroup;",
-                "  secondaryMuscleGroup?: SecondaryMuscleGroup;",
+                "  additionalPrimaryMuscleGroup?: MuscleGroup;",
                 "  sourceWeightType?: string;",
                 "  defaultWeightType: WeightType;",
                 "  movementCategory?: string;",

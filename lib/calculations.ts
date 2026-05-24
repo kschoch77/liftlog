@@ -6,6 +6,7 @@ import {
   type SetEntry,
   type Workout,
 } from "@/types/workout";
+import { findCatalogExercise } from "@/lib/exerciseCatalog";
 
 export type MuscleGroupTargetRange = {
   min: number;
@@ -18,18 +19,39 @@ export type MuscleGroupTargetStatus = {
 };
 
 export const muscleGroupWeeklyTargets: Record<MuscleGroup, MuscleGroupTargetRange> = {
-  Chest: { min: 10, max: 20 },
-  Back: { min: 10, max: 20 },
-  Lats: { min: 8, max: 16 },
-  Abs: { min: 6, max: 16 },
-  Shoulders: { min: 8, max: 18 },
-  Biceps: { min: 8, max: 16 },
-  Triceps: { min: 8, max: 16 },
-  Quads: { min: 8, max: 18 },
-  Hamstrings: { min: 8, max: 16 },
-  Glutes: { min: 8, max: 18 },
-  Calves: { min: 6, max: 16 },
+  Chest: { min: 6, max: 9 },
+  Shoulders: { min: 10, max: 13 },
+  "Mid-Back": { min: 9, max: 12 },
+  Lats: { min: 6, max: 9 },
+  Biceps: { min: 6, max: 9 },
+  Triceps: { min: 6, max: 9 },
+  Forearms: { min: 6, max: 9 },
+  Quads: { min: 8, max: 11 },
+  Hamstrings: { min: 4, max: 7 },
+  "Glutes/Hips": { min: 9, max: 12 },
+  Calves: { min: 4, max: 7 },
+  Abs: { min: 4, max: 7 },
 };
+
+export function normalizeMuscleGroup(
+  group: string | null | undefined,
+): MuscleGroup | undefined {
+  if (!group) {
+    return undefined;
+  }
+
+  if (group === "Back") {
+    return "Mid-Back";
+  }
+
+  if (group === "Glutes") {
+    return "Glutes/Hips";
+  }
+
+  return muscleGroups.includes(group as MuscleGroup)
+    ? (group as MuscleGroup)
+    : undefined;
+}
 
 export function getSetWeightType(set: SetEntry) {
   return set.weightType ?? "weight";
@@ -72,13 +94,6 @@ export function estimateOneRepMax(weight: number, reps: number) {
   return Math.round(estimate * 10) / 10;
 }
 
-function getStartOfWeek(referenceDate = new Date()) {
-  const startOfWeek = new Date(referenceDate);
-  startOfWeek.setDate(referenceDate.getDate() - referenceDate.getDay());
-  startOfWeek.setHours(0, 0, 0, 0);
-  return startOfWeek;
-}
-
 function getDaysAgo(days: number, referenceDate = new Date()) {
   const date = new Date(referenceDate);
   date.setDate(referenceDate.getDate() - days);
@@ -86,10 +101,16 @@ function getDaysAgo(days: number, referenceDate = new Date()) {
   return date;
 }
 
-function getCurrentWeekWorkouts(workouts: Workout[], referenceDate = new Date()) {
-  const startOfWeek = getStartOfWeek(referenceDate);
+function getTrailingSevenDayWorkouts(
+  workouts: Workout[],
+  referenceDate = new Date(),
+) {
+  const startDate = getDaysAgo(6, referenceDate);
 
-  return workouts.filter((workout) => new Date(workout.date) >= startOfWeek);
+  return workouts.filter((workout) => {
+    const workoutDate = new Date(workout.date);
+    return workoutDate >= startDate && workoutDate <= referenceDate;
+  });
 }
 
 export function calculateWorkoutVolume(exercises: ExerciseEntry[]) {
@@ -114,11 +135,25 @@ export function calculateWorkoutHardSetCount(workout: Workout) {
 }
 
 export function getWorkoutMuscleGroups(workout: Workout) {
-  const groups = workout.exercises
-    .map((exercise) => exercise.primaryMuscleGroup)
-    .filter((group): group is MuscleGroup => Boolean(group));
+  const groups = workout.exercises.flatMap(getExerciseMuscleGroups);
 
   return Array.from(new Set(groups));
+}
+
+function getExerciseMuscleGroups(exercise: ExerciseEntry) {
+  const catalogEntry = findCatalogExercise(exercise.name);
+  const primaryMuscleGroup = normalizeMuscleGroup(
+    exercise.primaryMuscleGroup ?? catalogEntry?.primaryMuscleGroup,
+  );
+  const additionalPrimaryMuscleGroup = normalizeMuscleGroup(
+    exercise.additionalPrimaryMuscleGroup ??
+      catalogEntry?.additionalPrimaryMuscleGroup,
+  );
+
+  return [primaryMuscleGroup, additionalPrimaryMuscleGroup].filter(
+    (group, index, groups): group is MuscleGroup =>
+      Boolean(group) && groups.indexOf(group) === index,
+  );
 }
 
 export function calculateExercisePRs(workouts: Workout[]) {
@@ -158,7 +193,7 @@ export function calculateWeeklyWorkoutCount(
   workouts: Workout[],
   referenceDate = new Date(),
 ) {
-  return getCurrentWeekWorkouts(workouts, referenceDate).length;
+  return getTrailingSevenDayWorkouts(workouts, referenceDate).length;
 }
 
 export function calculateMuscleGroupTargetStatus(
@@ -184,17 +219,18 @@ export function calculateHardSetsByMuscleGroup(
     muscleGroups.map((group) => [group, 0]),
   );
 
-  getCurrentWeekWorkouts(workouts, referenceDate).forEach((workout) => {
+  getTrailingSevenDayWorkouts(workouts, referenceDate).forEach((workout) => {
     workout.exercises.forEach((exercise) => {
-      if (!exercise.primaryMuscleGroup) {
+      const muscleGroups = getExerciseMuscleGroups(exercise);
+
+      if (!muscleGroups.length) {
         return;
       }
 
       const hardSets = exercise.sets.filter(isHardSet).length;
-      totals.set(
-        exercise.primaryMuscleGroup,
-        (totals.get(exercise.primaryMuscleGroup) ?? 0) + hardSets,
-      );
+      muscleGroups.forEach((group) => {
+        totals.set(group, (totals.get(group) ?? 0) + hardSets);
+      });
     });
   });
 
@@ -225,7 +261,7 @@ export function calculateTotalHardSetsThisWeek(
   workouts: Workout[],
   referenceDate = new Date(),
 ) {
-  return getCurrentWeekWorkouts(workouts, referenceDate).reduce(
+  return getTrailingSevenDayWorkouts(workouts, referenceDate).reduce(
     (total, workout) =>
       total +
       workout.exercises.reduce(
@@ -411,9 +447,11 @@ export function getCurrentWeekMuscleGroupVolume(workouts: Workout[]) {
     muscleGroups.map((group) => [group, 0]),
   );
 
-  getCurrentWeekWorkouts(workouts).forEach((workout) => {
+  getTrailingSevenDayWorkouts(workouts).forEach((workout) => {
     workout.exercises.forEach((exercise) => {
-      if (!exercise.primaryMuscleGroup) {
+      const muscleGroups = getExerciseMuscleGroups(exercise);
+
+      if (!muscleGroups.length) {
         return;
       }
 
@@ -425,10 +463,9 @@ export function getCurrentWeekMuscleGroupVolume(workouts: Workout[]) {
         return sum + getEffectiveSetWeight(set) * set.reps;
       }, 0);
 
-      totals.set(
-        exercise.primaryMuscleGroup,
-        (totals.get(exercise.primaryMuscleGroup) ?? 0) + exerciseVolume,
-      );
+      muscleGroups.forEach((group) => {
+        totals.set(group, (totals.get(group) ?? 0) + exerciseVolume);
+      });
     });
   });
 
@@ -452,11 +489,13 @@ export function calculateMuscleGroupFrequency(
     ]),
   );
 
-  getCurrentWeekWorkouts(workouts, referenceDate).forEach((workout) => {
+  getTrailingSevenDayWorkouts(workouts, referenceDate).forEach((workout) => {
     const trainedGroups = new Set<MuscleGroup>();
 
     workout.exercises.forEach((exercise) => {
-      if (!exercise.primaryMuscleGroup) {
+      const muscleGroups = getExerciseMuscleGroups(exercise);
+
+      if (!muscleGroups.length) {
         return;
       }
 
@@ -470,15 +509,17 @@ export function calculateMuscleGroupFrequency(
       }, 0);
 
       if (hardSets > 0) {
-        trainedGroups.add(exercise.primaryMuscleGroup);
+        muscleGroups.forEach((group) => trainedGroups.add(group));
       }
 
-      const groupStats = stats.get(exercise.primaryMuscleGroup);
+      muscleGroups.forEach((group) => {
+        const groupStats = stats.get(group);
 
-      if (groupStats) {
-        groupStats.hardSets += hardSets;
-        groupStats.volume += volume;
-      }
+        if (groupStats) {
+          groupStats.hardSets += hardSets;
+          groupStats.volume += volume;
+        }
+      });
     });
 
     trainedGroups.forEach((group) => {

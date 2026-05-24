@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Dumbbell, Home } from "lucide-react";
+import { BarChart3, Dumbbell, FolderKanban, Home } from "lucide-react";
 
 const tabs = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/workout", label: "Workout", icon: Dumbbell },
+  { href: "/workout", label: "Start Workout", icon: Dumbbell },
+  { href: "/templates", label: "Templates", icon: FolderKanban },
   { href: "/metrics", label: "My Metrics", icon: BarChart3 },
 ];
 
@@ -15,7 +16,7 @@ export function BottomNav() {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 px-4 pb-[max(env(safe-area-inset-bottom),0.5rem)] pt-2 backdrop-blur">
-      <div className="mx-auto grid max-w-md grid-cols-3 gap-2">
+      <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive =
@@ -25,7 +26,7 @@ export function BottomNav() {
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex h-14 flex-col items-center justify-center gap-1 rounded-2xl text-xs font-semibold transition ${
+              className={`flex h-14 flex-col items-center justify-center gap-1 rounded-2xl px-1 text-[0.68rem] font-semibold leading-tight transition ${
                 isActive
                   ? "bg-blue-50 text-blue-600"
                   : "text-slate-500 hover:bg-slate-50"

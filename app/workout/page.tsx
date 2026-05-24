@@ -49,6 +49,7 @@ function createExercise(
     id: createId("exercise"),
     name,
     primaryMuscleGroup: catalogEntry?.primaryMuscleGroup,
+    additionalPrimaryMuscleGroup: catalogEntry?.additionalPrimaryMuscleGroup,
     sets: [
       {
         id: createId("set"),
@@ -220,7 +221,7 @@ export default function WorkoutPage() {
       <header className="flex items-start justify-between gap-4 pt-2">
         <div>
           <p className="text-sm font-bold uppercase tracking-wide text-blue-600">
-            Workout
+            Start Workout
           </p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
             Today&apos;s Workout

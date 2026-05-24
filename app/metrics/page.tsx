@@ -253,7 +253,7 @@ export default function MetricsPage() {
   const volumeFrequency = useMemo(
     () =>
       calculateMuscleGroupFrequency(workouts).filter(
-        (item) => item.hardSets > 0 || item.volume > 0 || item.sessions > 0,
+        (item) => item.hardSets > 0 || item.sessions > 0,
       ),
     [workouts],
   );
@@ -281,12 +281,12 @@ export default function MetricsPage() {
           <OverviewCard
             label="Workouts"
             value={weeklyWorkoutCount}
-            detail="this week"
+            detail="trailing 7 days"
           />
           <OverviewCard
             label="Hard sets"
             value={totalHardSets}
-            detail="working sets"
+            detail="trailing 7 days"
           />
           <OverviewCard
             label="Top group"
@@ -306,7 +306,7 @@ export default function MetricsPage() {
       </section>
 
       <div className="mt-4">
-        <SectionCard title="Weekly Hard Sets" eyebrow="Primary metric">
+        <SectionCard title="Hard Sets - Trailing 7 Days" eyebrow="Primary metric">
           <div className="space-y-4">
             {hardSetsByMuscleGroup.map((item) => {
               const width =
@@ -447,7 +447,7 @@ export default function MetricsPage() {
       </div>
 
       <div className="mt-4">
-        <SectionCard title="Volume & Frequency" eyebrow="This week">
+        <SectionCard title="Training Frequency" eyebrow="Trailing 7 days">
           <div className="divide-y divide-slate-100">
             {volumeFrequency.length ? (
               volumeFrequency.map((item) => (
@@ -464,9 +464,6 @@ export default function MetricsPage() {
                   <div className="text-right">
                     <p className="text-sm font-black text-slate-950">
                       {item.hardSets} hard sets
-                    </p>
-                    <p className="font-mono text-xs font-semibold text-slate-500">
-                      {item.volume.toLocaleString()} lb
                     </p>
                   </div>
                 </div>

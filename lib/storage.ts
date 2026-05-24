@@ -2,6 +2,8 @@ import type {
   ActiveWorkoutSession,
   Workout,
   WorkoutDraft,
+  WorkoutTemplate,
+  WorkoutTemplateFolder,
 } from "@/types/workout";
 import {
   calculateExercisePRs,
@@ -18,6 +20,8 @@ const WORKOUTS_KEY = "liftlog.workouts";
 const EXERCISE_NAMES_KEY = "liftlog.exerciseNames";
 const DRAFT_KEY = "liftlog.activeDraft";
 const ACTIVE_SESSION_KEY = "liftlog.activeWorkoutSession";
+const TEMPLATE_FOLDERS_KEY = "liftlog.templateFolders";
+const WORKOUT_TEMPLATES_KEY = "liftlog.workoutTemplates";
 const RESET_V11_KEY = "liftlog.reset.v1_1_done";
 const STORAGE_EVENT = "liftlog-storage";
 let workoutsCacheRaw: string | null = null;
@@ -28,6 +32,10 @@ let draftCacheRaw: string | null = null;
 let draftCacheValue: WorkoutDraft | null = null;
 let activeSessionCacheRaw: string | null = null;
 let activeSessionCacheValue: ActiveWorkoutSession | null = null;
+let templateFoldersCacheRaw: string | null = null;
+let templateFoldersCacheValue: WorkoutTemplateFolder[] = [];
+let workoutTemplatesCacheRaw: string | null = null;
+let workoutTemplatesCacheValue: WorkoutTemplate[] = [];
 
 function ensureV11LocalDataReset() {
   if (typeof window === "undefined") {
@@ -40,8 +48,10 @@ function ensureV11LocalDataReset() {
 
   window.localStorage.removeItem(WORKOUTS_KEY);
   window.localStorage.removeItem(EXERCISE_NAMES_KEY);
-  window.localStorage.removeItem(DRAFT_KEY);
-  window.localStorage.removeItem(ACTIVE_SESSION_KEY);
+    window.localStorage.removeItem(DRAFT_KEY);
+    window.localStorage.removeItem(ACTIVE_SESSION_KEY);
+    window.localStorage.removeItem(TEMPLATE_FOLDERS_KEY);
+    window.localStorage.removeItem(WORKOUT_TEMPLATES_KEY);
   window.localStorage.setItem(RESET_V11_KEY, "true");
   window.dispatchEvent(
     new CustomEvent(STORAGE_EVENT, { detail: { key: WORKOUTS_KEY } }),
@@ -272,6 +282,85 @@ export function clearActiveWorkoutSession() {
   window.localStorage.removeItem(ACTIVE_SESSION_KEY);
   window.dispatchEvent(
     new CustomEvent(STORAGE_EVENT, { detail: { key: ACTIVE_SESSION_KEY } }),
+  );
+}
+
+export function getTemplateFolders() {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  ensureV11LocalDataReset();
+  const rawValue = window.localStorage.getItem(TEMPLATE_FOLDERS_KEY);
+  if (rawValue === templateFoldersCacheRaw) {
+    return templateFoldersCacheValue;
+  }
+
+  templateFoldersCacheRaw = rawValue;
+  templateFoldersCacheValue = readJson<WorkoutTemplateFolder[]>(
+    TEMPLATE_FOLDERS_KEY,
+    [],
+  ).sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+  return templateFoldersCacheValue;
+}
+
+export function replaceTemplateFolders(folders: WorkoutTemplateFolder[]) {
+  writeJson(
+    TEMPLATE_FOLDERS_KEY,
+    [...folders].sort((a, b) => a.createdAt.localeCompare(b.createdAt)),
+  );
+}
+
+export function saveTemplateFolder(folder: WorkoutTemplateFolder) {
+  const folders = getTemplateFolders().filter((item) => item.id !== folder.id);
+  replaceTemplateFolders([...folders, folder]);
+}
+
+export function deleteTemplateFolder(folderId: string) {
+  replaceTemplateFolders(
+    getTemplateFolders().filter((folder) => folder.id !== folderId),
+  );
+  replaceWorkoutTemplates(
+    getWorkoutTemplates().map((template) =>
+      template.folderId === folderId ? { ...template, folderId: undefined } : template,
+    ),
+  );
+}
+
+export function getWorkoutTemplates() {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  ensureV11LocalDataReset();
+  const rawValue = window.localStorage.getItem(WORKOUT_TEMPLATES_KEY);
+  if (rawValue === workoutTemplatesCacheRaw) {
+    return workoutTemplatesCacheValue;
+  }
+
+  workoutTemplatesCacheRaw = rawValue;
+  workoutTemplatesCacheValue = readJson<WorkoutTemplate[]>(
+    WORKOUT_TEMPLATES_KEY,
+    [],
+  ).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  return workoutTemplatesCacheValue;
+}
+
+export function replaceWorkoutTemplates(templates: WorkoutTemplate[]) {
+  writeJson(
+    WORKOUT_TEMPLATES_KEY,
+    [...templates].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
+  );
+}
+
+export function saveWorkoutTemplate(template: WorkoutTemplate) {
+  const templates = getWorkoutTemplates().filter((item) => item.id !== template.id);
+  replaceWorkoutTemplates([template, ...templates]);
+}
+
+export function deleteWorkoutTemplate(templateId: string) {
+  replaceWorkoutTemplates(
+    getWorkoutTemplates().filter((template) => template.id !== templateId),
   );
 }
 

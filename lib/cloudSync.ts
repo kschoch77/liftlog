@@ -1,9 +1,19 @@
 import type { User } from "@supabase/supabase-js";
-import type { ExerciseEntry, PRRecord, Workout } from "@/types/workout";
+import type {
+  ExerciseEntry,
+  PRRecord,
+  Workout,
+  WorkoutTemplate,
+  WorkoutTemplateFolder,
+} from "@/types/workout";
 import { getSupabase, isCloudConfigured } from "@/lib/supabase";
 import {
+  getTemplateFolders,
   getWorkouts,
+  getWorkoutTemplates,
   mergeExerciseNames,
+  replaceTemplateFolders,
+  replaceWorkoutTemplates,
   replaceWorkouts,
 } from "@/lib/storage";
 
@@ -14,6 +24,24 @@ type WorkoutRow = {
   exercises: ExerciseEntry[];
   total_volume: number;
   prs_achieved: PRRecord[];
+};
+
+type TemplateFolderRow = {
+  id: string;
+  user_id: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type WorkoutTemplateRow = {
+  id: string;
+  user_id: string;
+  name: string;
+  folder_id: string | null;
+  exercises: ExerciseEntry[];
+  created_at: string;
+  updated_at: string;
 };
 
 export type SyncResult = {
@@ -116,6 +144,54 @@ function workoutToRow(workout: Workout, user: User): WorkoutRow {
   };
 }
 
+function rowToTemplateFolder(row: TemplateFolderRow): WorkoutTemplateFolder {
+  return {
+    id: row.id,
+    name: row.name,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+function templateFolderToRow(
+  folder: WorkoutTemplateFolder,
+  user: User,
+): TemplateFolderRow {
+  return {
+    id: folder.id,
+    user_id: user.id,
+    name: folder.name,
+    created_at: folder.createdAt,
+    updated_at: folder.updatedAt,
+  };
+}
+
+function rowToWorkoutTemplate(row: WorkoutTemplateRow): WorkoutTemplate {
+  return {
+    id: row.id,
+    name: row.name,
+    folderId: row.folder_id ?? undefined,
+    exercises: row.exercises,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+function workoutTemplateToRow(
+  template: WorkoutTemplate,
+  user: User,
+): WorkoutTemplateRow {
+  return {
+    id: template.id,
+    user_id: user.id,
+    name: template.name,
+    folder_id: template.folderId ?? null,
+    exercises: template.exercises,
+    created_at: template.createdAt,
+    updated_at: template.updatedAt,
+  };
+}
+
 function mergeWorkouts(localWorkouts: Workout[], cloudWorkouts: Workout[]) {
   const workoutsById = new Map<string, Workout>();
 
@@ -126,6 +202,22 @@ function mergeWorkouts(localWorkouts: Workout[], cloudWorkouts: Workout[]) {
   return Array.from(workoutsById.values()).sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
+}
+
+function mergeByNewestUpdatedAt<T extends { id: string; updatedAt: string }>(
+  localItems: T[],
+  cloudItems: T[],
+) {
+  const itemsById = new Map<string, T>();
+
+  [...cloudItems, ...localItems].forEach((item) => {
+    const current = itemsById.get(item.id);
+    if (!current || item.updatedAt >= current.updatedAt) {
+      itemsById.set(item.id, item);
+    }
+  });
+
+  return Array.from(itemsById.values());
 }
 
 function exerciseNamesFromWorkouts(workouts: Workout[]) {
@@ -173,10 +265,71 @@ export async function syncWorkouts(): Promise<SyncResult> {
     }
   }
 
+  const { data: folderData, error: folderError } = await supabase
+    .from("template_folders")
+    .select("*")
+    .order("created_at", { ascending: true });
+
+  if (folderError) {
+    return { ok: false, message: folderError.message };
+  }
+
+  const cloudFolders = ((folderData ?? []) as TemplateFolderRow[]).map(
+    rowToTemplateFolder,
+  );
+  const mergedFolders = mergeByNewestUpdatedAt(getTemplateFolders(), cloudFolders);
+  replaceTemplateFolders(mergedFolders);
+
+  if (mergedFolders.length) {
+    const { error: folderUpsertError } = await supabase
+      .from("template_folders")
+      .upsert(
+        mergedFolders.map((folder) => templateFolderToRow(folder, user)),
+        { onConflict: "id" },
+      );
+
+    if (folderUpsertError) {
+      return { ok: false, message: folderUpsertError.message };
+    }
+  }
+
+  const { data: templateData, error: templateError } = await supabase
+    .from("workout_templates")
+    .select("*")
+    .order("updated_at", { ascending: false });
+
+  if (templateError) {
+    return { ok: false, message: templateError.message };
+  }
+
+  const cloudTemplates = ((templateData ?? []) as WorkoutTemplateRow[]).map(
+    rowToWorkoutTemplate,
+  );
+  const mergedTemplates = mergeByNewestUpdatedAt(
+    getWorkoutTemplates(),
+    cloudTemplates,
+  );
+  replaceWorkoutTemplates(mergedTemplates);
+
+  if (mergedTemplates.length) {
+    const { error: templateUpsertError } = await supabase
+      .from("workout_templates")
+      .upsert(
+        mergedTemplates.map((template) => workoutTemplateToRow(template, user)),
+        { onConflict: "id" },
+      );
+
+    if (templateUpsertError) {
+      return { ok: false, message: templateUpsertError.message };
+    }
+  }
+
   return {
     ok: true,
     message: `Synced ${mergedWorkouts.length} workout${
       mergedWorkouts.length === 1 ? "" : "s"
+    } and ${mergedTemplates.length} template${
+      mergedTemplates.length === 1 ? "" : "s"
     }.`,
   };
 }
@@ -204,4 +357,58 @@ export async function deleteCloudWorkout(workoutId: string): Promise<SyncResult>
   }
 
   return { ok: true, message: "Deleted workout from cloud sync." };
+}
+
+export async function deleteCloudWorkoutTemplate(
+  templateId: string,
+): Promise<SyncResult> {
+  if (!isCloudConfigured()) {
+    return { ok: false, message: "Cloud sync is not configured yet." };
+  }
+
+  const supabase = getSupabase();
+  const user = await getCurrentUser();
+
+  if (!supabase || !user) {
+    return { ok: false, message: "Sign in to delete synced templates." };
+  }
+
+  const { error } = await supabase
+    .from("workout_templates")
+    .delete()
+    .eq("id", templateId)
+    .eq("user_id", user.id);
+
+  if (error) {
+    return { ok: false, message: error.message };
+  }
+
+  return { ok: true, message: "Deleted template from cloud sync." };
+}
+
+export async function deleteCloudTemplateFolder(
+  folderId: string,
+): Promise<SyncResult> {
+  if (!isCloudConfigured()) {
+    return { ok: false, message: "Cloud sync is not configured yet." };
+  }
+
+  const supabase = getSupabase();
+  const user = await getCurrentUser();
+
+  if (!supabase || !user) {
+    return { ok: false, message: "Sign in to delete synced folders." };
+  }
+
+  const { error } = await supabase
+    .from("template_folders")
+    .delete()
+    .eq("id", folderId)
+    .eq("user_id", user.id);
+
+  if (error) {
+    return { ok: false, message: error.message };
+  }
+
+  return { ok: true, message: "Deleted folder from cloud sync." };
 }

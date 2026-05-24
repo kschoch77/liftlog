@@ -1,15 +1,16 @@
 export const muscleGroups = [
   "Chest",
-  "Back",
-  "Lats",
-  "Abs",
   "Shoulders",
+  "Mid-Back",
+  "Lats",
   "Biceps",
   "Triceps",
+  "Forearms",
   "Quads",
   "Hamstrings",
-  "Glutes",
+  "Glutes/Hips",
   "Calves",
+  "Abs",
 ] as const;
 
 export type MuscleGroup = (typeof muscleGroups)[number];
@@ -24,11 +25,12 @@ export const weightTypes = [
 export type WeightType = (typeof weightTypes)[number];
 
 export const bandOptions = [
-  "Green (High)",
-  "Red (Med/High)",
-  "Orange (Med)",
-  "Yellow (Med/Low)",
-  "Purple (Low)",
+  "Green (Highest)",
+  "Red (High)",
+  "Orange (Medium-High)",
+  "Yellow (Medium-Low)",
+  "Turquoise (Low)",
+  "Purple (Lowest)",
 ] as const;
 
 export type BandOption = (typeof bandOptions)[number];
@@ -40,6 +42,7 @@ export type SetEntry = {
   completed: boolean;
   isWarmup?: boolean;
   note?: string;
+  rir?: number;
   isPR?: boolean;
   weightType?: WeightType;
   band?: BandOption;
@@ -51,6 +54,7 @@ export type ExerciseEntry = {
   id: string;
   name: string;
   primaryMuscleGroup?: MuscleGroup;
+  additionalPrimaryMuscleGroup?: MuscleGroup;
   sets: SetEntry[];
 };
 
@@ -71,6 +75,22 @@ export type ActiveWorkoutSession = {
   startedAt: string;
   updatedAt: string;
   exercises: ExerciseEntry[];
+};
+
+export type WorkoutTemplateFolder = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type WorkoutTemplate = {
+  id: string;
+  name: string;
+  folderId?: string;
+  exercises: ExerciseEntry[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ExerciseHistory = {

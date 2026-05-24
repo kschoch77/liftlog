@@ -155,6 +155,32 @@ export function ExerciseCard({
               </option>
             ))}
           </select>
+          <label
+            className="mt-3 block text-xs font-black uppercase tracking-wide text-slate-400"
+            htmlFor={`${exercise.id}-additional-muscle-group`}
+          >
+            Additional primary muscle
+          </label>
+          <select
+            id={`${exercise.id}-additional-muscle-group`}
+            value={exercise.additionalPrimaryMuscleGroup ?? ""}
+            onChange={(event) =>
+              onChange({
+                ...exercise,
+                additionalPrimaryMuscleGroup: event.target.value
+                  ? (event.target.value as MuscleGroup)
+                  : undefined,
+              })
+            }
+            className="mt-1 h-10 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+          >
+            <option value="">None</option>
+            {muscleGroups.map((group) => (
+              <option key={group} value={group}>
+                {group}
+              </option>
+            ))}
+          </select>
         </div>
         <button
           type="button"
