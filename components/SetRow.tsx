@@ -107,7 +107,15 @@ export function SetRow({
               ? `Set ${setNumber} is a warm-up. Tap for working set.`
               : `Set ${setNumber} is a working set. Tap for warm-up.`
           }
-          onClick={() => onChange({ ...set, isWarmup: !set.isWarmup, isPR: false })}
+          onClick={() => {
+            const nextIsWarmup = !set.isWarmup;
+            onChange({
+              ...set,
+              isWarmup: nextIsWarmup,
+              isPR: false,
+              ...(nextIsWarmup ? { rir: undefined } : {}),
+            });
+          }}
           className={`flex h-9 items-center justify-center rounded-xl text-sm font-black ${
             set.isWarmup
               ? "bg-amber-100 text-amber-600"
@@ -198,7 +206,7 @@ export function SetRow({
 
       {weightType === "weight" || weightType === "assistance" ? (
         <div className="space-y-2 px-2 pb-2">
-          <div className="grid grid-cols-[1fr_5rem] gap-2">
+          <div className={set.isWarmup ? "" : "grid grid-cols-[1fr_5rem] gap-2"}>
             <label className="sr-only" htmlFor={`${set.id}-weight`}>
               Pounds
             </label>
@@ -218,24 +226,28 @@ export function SetRow({
               }
               className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
             />
-            <label className="sr-only" htmlFor={`${set.id}-rir`}>
-              Reps in reserve
-            </label>
-            <input
-              id={`${set.id}-rir`}
-              inputMode="decimal"
-              pattern="[0-9]*"
-              type="text"
-              placeholder="RIR"
-              value={set.rir ?? ""}
-              onChange={(event) =>
-                onChange({
-                  ...set,
-                  rir: optionalNumberFromInput(event.target.value),
-                })
-              }
-              className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-            />
+            {!set.isWarmup && (
+              <>
+                <label className="sr-only" htmlFor={`${set.id}-rir`}>
+                  Reps in reserve
+                </label>
+                <input
+                  id={`${set.id}-rir`}
+                  inputMode="decimal"
+                  pattern="[0-9]*"
+                  type="text"
+                  placeholder="RIR"
+                  value={set.rir ?? ""}
+                  onChange={(event) =>
+                    onChange({
+                      ...set,
+                      rir: optionalNumberFromInput(event.target.value),
+                    })
+                  }
+                  className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
+              </>
+            )}
           </div>
           {weightType === "weight" && isBarbellExercise ? (
             <div className="rounded-xl border border-slate-100 bg-slate-50 p-2">
@@ -261,7 +273,7 @@ export function SetRow({
       ) : null}
 
       {weightType === "band" ? (
-        <div className="grid grid-cols-[1fr_5rem] gap-2 px-2 pb-2">
+        <div className={set.isWarmup ? "px-2 pb-2" : "grid grid-cols-[1fr_5rem] gap-2 px-2 pb-2"}>
           <label className="sr-only" htmlFor={`${set.id}-band`}>
             Band
           </label>
@@ -284,28 +296,32 @@ export function SetRow({
               </option>
             ))}
           </select>
-          <label className="sr-only" htmlFor={`${set.id}-band-rir`}>
-            Reps in reserve
-          </label>
-          <input
-            id={`${set.id}-band-rir`}
-            inputMode="decimal"
-            pattern="[0-9]*"
-            type="text"
-            placeholder="RIR"
-            value={set.rir ?? ""}
-            onChange={(event) =>
-              onChange({
-                ...set,
-                rir: optionalNumberFromInput(event.target.value),
-              })
-            }
-            className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
-          />
+          {!set.isWarmup && (
+            <>
+              <label className="sr-only" htmlFor={`${set.id}-band-rir`}>
+                Reps in reserve
+              </label>
+              <input
+                id={`${set.id}-band-rir`}
+                inputMode="decimal"
+                pattern="[0-9]*"
+                type="text"
+                placeholder="RIR"
+                value={set.rir ?? ""}
+                onChange={(event) =>
+                  onChange({
+                    ...set,
+                    rir: optionalNumberFromInput(event.target.value),
+                  })
+                }
+                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              />
+            </>
+          )}
         </div>
       ) : null}
 
-      {weightType === "bodyweight" ? (
+      {weightType === "bodyweight" && !set.isWarmup ? (
         <div className="px-2 pb-2">
           <label className="sr-only" htmlFor={`${set.id}-bodyweight-rir`}>
             Reps in reserve

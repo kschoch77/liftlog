@@ -399,7 +399,6 @@ export default function TemplatesPage() {
           <h2 className="text-2xl font-black tracking-tight text-slate-950">
             My Folders ({folders.length})
           </h2>
-          <MoreHorizontal className="text-blue-500" size={24} />
         </div>
 
         <form onSubmit={createFolder} className="mt-3 flex gap-2">
@@ -471,7 +470,6 @@ export default function TemplatesPage() {
           <h2 className="text-2xl font-black tracking-tight text-slate-950">
             My Templates ({templates.length})
           </h2>
-          <MoreHorizontal className="text-blue-500" size={24} />
         </div>
 
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
