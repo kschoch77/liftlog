@@ -21,15 +21,6 @@ export const exerciseCatalog = [
     "equipment": "Free Area"
   },
   {
-    "name": "Ab Leg Raise",
-    "primaryMuscleGroup": "Abs",
-    "additionalPrimaryMuscleGroup": undefined,
-    "sourceWeightType": "Bodyweight",
-    "defaultWeightType": "bodyweight",
-    "movementCategory": "Hip Flexion",
-    "equipment": "Rack"
-  },
-  {
     "name": "Ab Wheel",
     "primaryMuscleGroup": "Abs",
     "additionalPrimaryMuscleGroup": undefined,
@@ -57,7 +48,16 @@ export const exerciseCatalog = [
     "equipment": "Bench"
   },
   {
-    "name": "Back Squat",
+    "name": "Bayesian Cable Bicep Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "BB Back Squat",
     "primaryMuscleGroup": "Quads",
     "additionalPrimaryMuscleGroup": "Glutes/Hips",
     "sourceWeightType": "Barbell",
@@ -66,13 +66,13 @@ export const exerciseCatalog = [
     "equipment": "Rack"
   },
   {
-    "name": "Bayesian Bicep Curl",
-    "primaryMuscleGroup": "Biceps",
-    "additionalPrimaryMuscleGroup": undefined,
-    "sourceWeightType": "Stack",
+    "name": "BB Front Squat",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": "Glutes/Hips",
+    "sourceWeightType": "Barbell",
     "defaultWeightType": "weight",
-    "movementCategory": "Bicep Curl",
-    "equipment": "Machine - Pin-loaded"
+    "movementCategory": "Squat",
+    "equipment": "Rack"
   },
   {
     "name": "BB Hip Thrust",
@@ -84,6 +84,15 @@ export const exerciseCatalog = [
     "equipment": "Bench"
   },
   {
+    "name": "BB Reverse Lunge",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": "Glutes/Hips",
+    "sourceWeightType": "Barbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Lunge",
+    "equipment": "Rack"
+  },
+  {
     "name": "BB Romanian Deadlift / RDL",
     "primaryMuscleGroup": "Hamstrings",
     "additionalPrimaryMuscleGroup": "Glutes/Hips",
@@ -91,6 +100,24 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Hip Hinge",
     "equipment": "Rack"
+  },
+  {
+    "name": "BB Shrug",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Barbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shrug",
+    "equipment": "Rack"
+  },
+  {
+    "name": "BB Walking Lunge",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": "Glutes/Hips",
+    "sourceWeightType": "Barbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Lunge",
+    "equipment": "Free Area"
   },
   {
     "name": "Bent-over BB Row",
@@ -156,7 +183,7 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Cable Lateral Raise",
+    "name": "Cable Lateral Raise / Shoulder Fly",
     "primaryMuscleGroup": "Shoulders",
     "additionalPrimaryMuscleGroup": undefined,
     "sourceWeightType": "Stack",
@@ -165,12 +192,48 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Cable Rear Delt Fly",
+    "name": "Cable Rear Delt Fly / Reverse Fly",
     "primaryMuscleGroup": "Shoulders",
     "additionalPrimaryMuscleGroup": "Mid-Back",
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Reverse Fly",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Cable Shrug",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shrug",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Cable Wrist Curl",
+    "primaryMuscleGroup": "Forearms",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Wrist Curl",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Cable Wrist Extension",
+    "primaryMuscleGroup": "Forearms",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Wrist Extension",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Cable Y-Raise",
+    "primaryMuscleGroup": "Shoulders",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shoulder Abduction",
     "equipment": "Machine - Pin-loaded"
   },
   {
@@ -190,6 +253,15 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Horizontal Row",
     "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Chest-supported T-Bar Row",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": "Lats",
+    "sourceWeightType": "Plate",
+    "defaultWeightType": "weight",
+    "movementCategory": "Horizontal Row",
+    "equipment": "Machine - Plate-loaded"
   },
   {
     "name": "Chest-supported Wide-grip Row",
@@ -237,6 +309,15 @@ export const exerciseCatalog = [
     "equipment": "Free Area"
   },
   {
+    "name": "DB Hammer Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Free Area"
+  },
+  {
     "name": "DB Incline Bicep Curl",
     "primaryMuscleGroup": "Biceps",
     "additionalPrimaryMuscleGroup": undefined,
@@ -244,6 +325,15 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Bicep Curl",
     "equipment": "Bench"
+  },
+  {
+    "name": "DB Lateral Raise / Shoulder Fly",
+    "primaryMuscleGroup": "Shoulders",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shoulder Abduction",
+    "equipment": "Free Area"
   },
   {
     "name": "DB Pullover",
@@ -255,6 +345,24 @@ export const exerciseCatalog = [
     "equipment": "Bench"
   },
   {
+    "name": "DB Rear Delt Fly / Reverse Fly",
+    "primaryMuscleGroup": "Shoulders",
+    "additionalPrimaryMuscleGroup": "Mid-Back",
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Reverse Fly",
+    "equipment": "Bench"
+  },
+  {
+    "name": "DB Reverse Lunge",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": "Glutes/Hips",
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Lunge",
+    "equipment": "Free Area"
+  },
+  {
     "name": "DB Romanian Deadlift / RDL",
     "primaryMuscleGroup": "Hamstrings",
     "additionalPrimaryMuscleGroup": "Glutes/Hips",
@@ -264,6 +372,15 @@ export const exerciseCatalog = [
     "equipment": "Rack"
   },
   {
+    "name": "DB Shrug",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shrug",
+    "equipment": "Free Area"
+  },
+  {
     "name": "DB Split Squat",
     "primaryMuscleGroup": "Quads",
     "additionalPrimaryMuscleGroup": "Glutes/Hips",
@@ -271,6 +388,33 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Squat",
     "equipment": "Free Area"
+  },
+  {
+    "name": "DB Walking Lunge",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": "Glutes/Hips",
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Lunge",
+    "equipment": "Free Area"
+  },
+  {
+    "name": "DB Wrist Curl",
+    "primaryMuscleGroup": "Forearms",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Wrist Curl",
+    "equipment": "Bench"
+  },
+  {
+    "name": "DB Wrist Extension",
+    "primaryMuscleGroup": "Forearms",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Wrist Extension",
+    "equipment": "Bench"
   },
   {
     "name": "Deadlift",
@@ -327,6 +471,15 @@ export const exerciseCatalog = [
     "equipment": "Free Area"
   },
   {
+    "name": "EZ Bar Preacher Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Barbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Bench"
+  },
+  {
     "name": "Flat BB Bench Press",
     "primaryMuscleGroup": "Chest",
     "additionalPrimaryMuscleGroup": "Shoulders",
@@ -372,15 +525,6 @@ export const exerciseCatalog = [
     "equipment": "Machine - Plate-loaded"
   },
   {
-    "name": "Front Squat",
-    "primaryMuscleGroup": "Quads",
-    "additionalPrimaryMuscleGroup": "Glutes/Hips",
-    "sourceWeightType": "Barbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Squat",
-    "equipment": "Rack"
-  },
-  {
     "name": "Glute Bridge",
     "primaryMuscleGroup": "Glutes/Hips",
     "additionalPrimaryMuscleGroup": undefined,
@@ -417,16 +561,16 @@ export const exerciseCatalog = [
     "equipment": "Machine - Plate-loaded"
   },
   {
-    "name": "Hammer Curl",
-    "primaryMuscleGroup": "Biceps",
+    "name": "Hanging Knee Raise",
+    "primaryMuscleGroup": "Abs",
     "additionalPrimaryMuscleGroup": undefined,
-    "sourceWeightType": "Dumbbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Bicep Curl",
-    "equipment": "Free Area"
+    "sourceWeightType": "Bodyweight",
+    "defaultWeightType": "bodyweight",
+    "movementCategory": "Hip Flexion",
+    "equipment": "Rack"
   },
   {
-    "name": "Hanging Knee Raise",
+    "name": "Hanging Leg Raise",
     "primaryMuscleGroup": "Abs",
     "additionalPrimaryMuscleGroup": undefined,
     "sourceWeightType": "Bodyweight",
@@ -453,6 +597,15 @@ export const exerciseCatalog = [
     "equipment": "Bench"
   },
   {
+    "name": "Incline DB Y-Raise",
+    "primaryMuscleGroup": "Shoulders",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shoulder Abduction",
+    "equipment": "Bench"
+  },
+  {
     "name": "Incline Machine Chest Press",
     "primaryMuscleGroup": "Chest",
     "additionalPrimaryMuscleGroup": "Shoulders",
@@ -471,13 +624,31 @@ export const exerciseCatalog = [
     "equipment": "Machine - Plate-loaded"
   },
   {
-    "name": "Lateral Raise / Shoulder Fly",
-    "primaryMuscleGroup": "Shoulders",
+    "name": "Kelso Shrug - Incline DB",
+    "primaryMuscleGroup": "Mid-Back",
     "additionalPrimaryMuscleGroup": undefined,
     "sourceWeightType": "Dumbbell",
     "defaultWeightType": "weight",
-    "movementCategory": "Shoulder Abduction",
-    "equipment": "Free Area"
+    "movementCategory": "Shoulder Extension",
+    "equipment": "Bench"
+  },
+  {
+    "name": "Kelso Shrug - Seated Cable",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shoulder Extension",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Kelso Shrug - T-Bar",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Plate",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shoulder Extension",
+    "equipment": "Machine - Plate-loaded"
   },
   {
     "name": "Leg Curl",
@@ -507,6 +678,15 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
+    "name": "Lying Leg Raise / Dragon Flag",
+    "primaryMuscleGroup": "Abs",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Bodyweight",
+    "defaultWeightType": "bodyweight",
+    "movementCategory": "Hip Flexion",
+    "equipment": "Bench"
+  },
+  {
     "name": "Machine Crunch",
     "primaryMuscleGroup": "Abs",
     "additionalPrimaryMuscleGroup": undefined,
@@ -534,7 +714,7 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Machine Lateral Raise",
+    "name": "Machine Lateral Raise / Shoulder Fly",
     "primaryMuscleGroup": "Shoulders",
     "additionalPrimaryMuscleGroup": undefined,
     "sourceWeightType": "Stack",
@@ -543,13 +723,31 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Machine Rear Delt Fly",
+    "name": "Machine Preacher Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Machine Rear Delt Fly / Reverse Pec Deck",
     "primaryMuscleGroup": "Shoulders",
     "additionalPrimaryMuscleGroup": "Mid-Back",
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Reverse Fly",
     "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Machine Shrug",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Plate",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shrug",
+    "equipment": "Machine - Plate-loaded"
   },
   {
     "name": "Meadows Row",
@@ -588,7 +786,7 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Pec Deck Fly",
+    "name": "Pec Deck / Machine Chest Fly",
     "primaryMuscleGroup": "Chest",
     "additionalPrimaryMuscleGroup": undefined,
     "sourceWeightType": "Stack",
@@ -624,30 +822,12 @@ export const exerciseCatalog = [
     "equipment": "Machine - Plate-loaded"
   },
   {
-    "name": "Preacher Curl",
-    "primaryMuscleGroup": "Biceps",
-    "additionalPrimaryMuscleGroup": undefined,
-    "sourceWeightType": "Barbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Bicep Curl",
-    "equipment": "Bench"
-  },
-  {
     "name": "Push-up",
     "primaryMuscleGroup": "Chest",
     "additionalPrimaryMuscleGroup": "Shoulders",
     "sourceWeightType": "Bodyweight",
     "defaultWeightType": "bodyweight",
     "movementCategory": "Chest Press",
-    "equipment": "Free Area"
-  },
-  {
-    "name": "Reverse Lunge",
-    "primaryMuscleGroup": "Quads",
-    "additionalPrimaryMuscleGroup": "Glutes/Hips",
-    "sourceWeightType": "Dumbbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Lunge",
     "equipment": "Free Area"
   },
   {
@@ -732,13 +912,31 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "Single-arm Lat Pull-down",
+    "name": "Single-Arm Hammer Preacher Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Bench"
+  },
+  {
+    "name": "Single-arm Lat Pull-down / Cable Pull-down",
     "primaryMuscleGroup": "Lats",
     "additionalPrimaryMuscleGroup": "Mid-Back",
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Vertical Pull",
     "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Single-Arm Preacher Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Bench"
   },
   {
     "name": "Single-leg Leg Press",
@@ -757,6 +955,15 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Hip Hinge",
     "equipment": "Rack"
+  },
+  {
+    "name": "Sissy Squat",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Bodyweight",
+    "defaultWeightType": "bodyweight",
+    "movementCategory": "Squat",
+    "equipment": "Free Area"
   },
   {
     "name": "Skullcrusher / Lying Tricep Extension",
@@ -813,15 +1020,6 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
-    "name": "T-Bar Row",
-    "primaryMuscleGroup": "Mid-Back",
-    "additionalPrimaryMuscleGroup": "Lats",
-    "sourceWeightType": "Plate",
-    "defaultWeightType": "weight",
-    "movementCategory": "Horizontal Row",
-    "equipment": "Machine - Plate-loaded"
-  },
-  {
     "name": "Tricep Pushdown / Extension",
     "primaryMuscleGroup": "Triceps",
     "additionalPrimaryMuscleGroup": undefined,
@@ -829,15 +1027,6 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Tricep Extension",
     "equipment": "Machine - Pin-loaded"
-  },
-  {
-    "name": "Walking Lunge",
-    "primaryMuscleGroup": "Quads",
-    "additionalPrimaryMuscleGroup": "Glutes/Hips",
-    "sourceWeightType": "Dumbbell",
-    "defaultWeightType": "weight",
-    "movementCategory": "Lunge",
-    "equipment": "Free Area"
   },
   {
     "name": "Wide-grip Lat Pull-down",
@@ -856,6 +1045,15 @@ export const exerciseCatalog = [
     "defaultWeightType": "bodyweight",
     "movementCategory": "Vertical Pull",
     "equipment": "Rack"
+  },
+  {
+    "name": "Zottman Bicep Curl",
+    "primaryMuscleGroup": "Biceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Dumbbell",
+    "defaultWeightType": "weight",
+    "movementCategory": "Bicep Curl",
+    "equipment": "Free Area"
   }
 ] satisfies ExerciseCatalogEntry[];
 
