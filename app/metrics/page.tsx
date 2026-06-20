@@ -115,17 +115,17 @@ function ExerciseProgressChart({ data }: { data: LinePoint[] }) {
             <line
               key={line}
               x1="28"
-              x2="304"
+              x2="292"
               y1={40 + line * 46}
               y2={40 + line * 46}
               stroke="#e5e7eb"
               strokeWidth="1"
             />
           ))}
-          <text x="306" y="43" fontSize="10" fontWeight="700" fill="#64748b">
+          <text x="316" y="43" textAnchor="end" fontSize="10" fontWeight="700" fill="#64748b">
             {Math.round(maxValue)}
           </text>
-          <text x="306" y="134" fontSize="10" fontWeight="700" fill="#64748b">
+          <text x="316" y="134" textAnchor="end" fontSize="10" fontWeight="700" fill="#64748b">
             {Math.round(minValue)}
           </text>
           {data.length > 1 ? (

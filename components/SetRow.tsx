@@ -45,14 +45,18 @@ function formatPreviousSet(set?: SetEntry) {
     return `-${set.weight} x ${set.reps}${rirLabel}`;
   }
 
-  const totalWeight =
-    set.includesBarWeight === false ? set.weight + (set.barWeight ?? 0) : set.weight;
-
-  if (totalWeight > 0) {
-    return `${totalWeight} x ${set.reps}${rirLabel}`;
+  let weightLabel = `${set.weight}`;
+  if (set.includesBarWeight === true) {
+    weightLabel = `${set.weight} (inc. bar)`;
+  } else if (set.includesBarWeight === false) {
+    if (set.barWeight && set.barWeight > 0) {
+      weightLabel = `${set.weight} (+${set.barWeight} bar)`;
+    } else {
+      weightLabel = `${set.weight} (excl. bar)`;
+    }
   }
 
-  return `0 x ${set.reps}${rirLabel}`;
+  return `${weightLabel} x ${set.reps}${rirLabel}`;
 }
 
 function numberFromInput(value: string) {
@@ -125,11 +129,11 @@ export function SetRow({
           {setLabel}
         </button>
 
-        <div className="min-w-0 text-center">
-          <p className="truncate text-xs font-black uppercase text-slate-400">
+        <div className="min-w-0 text-center px-1">
+          <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">
             Previous
           </p>
-          <p className="truncate text-sm font-semibold text-slate-500">
+          <p className="text-xs font-semibold text-slate-500 whitespace-normal break-words leading-tight">
             {formatPreviousSet(previousSet)}
           </p>
         </div>
