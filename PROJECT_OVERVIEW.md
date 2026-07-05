@@ -1,6 +1,6 @@
 # LiftLog Project Overview
 
-**Current Version:** `v1.7.0`  
+**Current Version:** `v1.9.0`  
 **Live URL:** [https://liftlog-weld.vercel.app/](https://liftlog-weld.vercel.app/)  
 **Design Paradigm:** Mobile-First, iPhone-Style Workout Tracker (optimally constrained to a sleek, central `max-w-md` frame).
 

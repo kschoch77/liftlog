@@ -10,7 +10,7 @@ export type ExerciseCatalogEntry = {
   equipment?: string;
 };
 
-export const exerciseCatalog = [
+export const exerciseCatalog: ExerciseCatalogEntry[] = [
   {
     "name": "Ab Crunch",
     "primaryMuscleGroup": "Abs",
@@ -255,6 +255,15 @@ export const exerciseCatalog = [
     "equipment": "Machine - Pin-loaded"
   },
   {
+    "name": "Chest-supported Narrow-grip Row",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Plate",
+    "defaultWeightType": "weight",
+    "movementCategory": "Horizontal Row",
+    "equipment": "Machine - Plate-loaded"
+  },
+  {
     "name": "Chest-supported T-Bar Row",
     "primaryMuscleGroup": "Mid-Back",
     "additionalPrimaryMuscleGroup": "Lats",
@@ -271,6 +280,15 @@ export const exerciseCatalog = [
     "defaultWeightType": "weight",
     "movementCategory": "Horizontal Row",
     "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Chest-supported Wide-grip Row",
+    "primaryMuscleGroup": "Mid-Back",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Plate",
+    "defaultWeightType": "weight",
+    "movementCategory": "Horizontal Row",
+    "equipment": "Machine - Plate-loaded"
   },
   {
     "name": "Chin-up / Supinated Pull-up",
@@ -939,6 +957,15 @@ export const exerciseCatalog = [
     "equipment": "Bench"
   },
   {
+    "name": "Single-leg Calf Raise on Leg Press",
+    "primaryMuscleGroup": "Calves",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Plate",
+    "defaultWeightType": "weight",
+    "movementCategory": "Calf Extension",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
     "name": "Single-leg Leg Press",
     "primaryMuscleGroup": "Quads",
     "additionalPrimaryMuscleGroup": "Glutes/Hips",
@@ -1055,11 +1082,11 @@ export const exerciseCatalog = [
     "movementCategory": "Bicep Curl",
     "equipment": "Free Area"
   }
-] satisfies ExerciseCatalogEntry[];
+];
 
-export const catalogExerciseNames = exerciseCatalog.map((exercise) => exercise.name);
-
-export function findCatalogExercise(name: string) {
-  const normalizedName = name.trim().toLowerCase();
-  return exerciseCatalog.find((exercise) => exercise.name.toLowerCase() === normalizedName);
+export function findCatalogExercise(name: string): ExerciseCatalogEntry | undefined {
+  const lowerName = name.toLowerCase();
+  return exerciseCatalog.find(
+    (exercise) => exercise.name.toLowerCase() === lowerName,
+  );
 }

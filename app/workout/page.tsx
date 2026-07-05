@@ -11,6 +11,7 @@ import {
   findNewPRs,
   findPreviousBest,
   findPreviousSets,
+  findAllPreviousSets,
 } from "@/lib/calculations";
 import type { ExerciseCatalogEntry } from "@/lib/exerciseCatalog";
 import { createId } from "@/lib/id";
@@ -123,6 +124,14 @@ export default function WorkoutPage() {
       previousSets[exercise.id] = findPreviousSets(savedWorkouts, exercise.name);
     });
     return previousSets;
+  }, [exercises, savedWorkouts]);
+
+  const allPreviousSetsByExercise = useMemo(() => {
+    const allPrevious: Record<string, { date: string; sets: ExerciseEntry["sets"] }[]> = {};
+    exercises.forEach((exercise) => {
+      allPrevious[exercise.id] = findAllPreviousSets(savedWorkouts, exercise.name);
+    });
+    return allPrevious;
   }, [exercises, savedWorkouts]);
 
   const livePRCount = exercises.reduce(
@@ -282,6 +291,7 @@ export default function WorkoutPage() {
               exercise={exercise}
               previousBest={currentPRs[exercise.id]}
               previousSets={previousSetsByExercise[exercise.id]}
+              allPreviousSets={allPreviousSetsByExercise[exercise.id]}
               onChange={(updatedExercise) =>
                 updateExercises(
                   exercises.map((item) =>

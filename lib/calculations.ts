@@ -299,6 +299,28 @@ export function findPreviousSets(
   );
 }
 
+export function findAllPreviousSets(
+  workouts: Workout[],
+  exerciseName: string,
+): { date: string; sets: SetEntry[] }[] {
+  const normalizedName = exerciseName.toLowerCase();
+  return workouts
+    .filter((workout) =>
+      workout.exercises.some(
+        (exercise) => exercise.name.toLowerCase() === normalizedName,
+      ),
+    )
+    .map((workout) => {
+      const exercise = workout.exercises.find(
+        (ex) => ex.name.toLowerCase() === normalizedName,
+      );
+      return {
+        date: workout.date,
+        sets: exercise?.sets ?? [],
+      };
+    });
+}
+
 export function findNewPRs(
   exercises: ExerciseEntry[],
   savedWorkouts: Workout[],

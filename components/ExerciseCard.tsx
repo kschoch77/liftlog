@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { SetRow } from "@/components/SetRow";
+import { ExerciseHistoryModal } from "@/components/ExerciseHistoryModal";
 import { countsTowardWeightMetrics, estimateOneRepMax } from "@/lib/calculations";
 import { findCatalogExercise } from "@/lib/exerciseCatalog";
 import { createId } from "@/lib/id";
@@ -17,6 +19,7 @@ type ExerciseCardProps = {
   exercise: ExerciseEntry;
   previousBest?: PRRecord;
   previousSets?: SetEntry[];
+  allPreviousSets?: { date: string; sets: SetEntry[] }[];
   onChange: (exercise: ExerciseEntry) => void;
   onRemove: () => void;
 };
@@ -56,10 +59,12 @@ export function ExerciseCard({
   exercise,
   previousBest,
   previousSets = [],
+  allPreviousSets = [],
   onChange,
   onRemove,
 }: ExerciseCardProps) {
   const isBarbellExercise = isBarbellExerciseName(exercise.name);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   function updateSet(updatedSet: SetEntry) {
     const normalizedSet = normalizeBarWeightFields(
@@ -193,9 +198,20 @@ export function ExerciseCard({
       </div>
 
       <div className="border-y border-slate-100 bg-slate-50 px-2 py-2">
-        <div className="grid grid-cols-[2.25rem_1fr_2.25rem_2.25rem_2.25rem] gap-1.5 text-center text-xs font-black text-slate-500">
+        <div className="grid grid-cols-[2.25rem_1fr_2.25rem_2.25rem_2.25rem] gap-1.5 text-center text-xs font-black text-slate-500 items-center">
           <span>Set</span>
-          <span>Previous</span>
+          <span className="flex items-center justify-center gap-1.5">
+            <span>Previous</span>
+            {allPreviousSets.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setIsHistoryOpen(true)}
+                className="text-[10px] font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded-md shrink-0 cursor-pointer"
+              >
+                See More
+              </button>
+            )}
+          </span>
           <span>Note</span>
           <span>Del</span>
           <span>Done</span>
@@ -233,6 +249,13 @@ export function ExerciseCard({
         <Plus size={19} />
         Add Set
       </button>
+
+      <ExerciseHistoryModal
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+        exerciseName={exercise.name}
+        history={allPreviousSets}
+      />
     </section>
   );
 }

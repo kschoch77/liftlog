@@ -11,6 +11,7 @@ import {
   findNewPRs,
   findPreviousBest,
   findPreviousSets,
+  findAllPreviousSets,
 } from "@/lib/calculations";
 import {
   deleteWorkout,
@@ -28,11 +29,13 @@ function buildUpdatedWorkout(
   exercises: ExerciseEntry[],
   workouts: Workout[],
   cleanHistory = false,
+  customDate?: string,
 ) {
+  const dateToUse = customDate || workout.date;
   const priorWorkouts = workouts.filter(
     (savedWorkout) =>
       savedWorkout.id !== workout.id &&
-      new Date(savedWorkout.date).getTime() < new Date(workout.date).getTime(),
+      new Date(savedWorkout.date).getTime() < new Date(dateToUse).getTime(),
   );
   const nextExercises = exercises
     .map((exercise) => ({
@@ -48,16 +51,36 @@ function buildUpdatedWorkout(
 
   return {
     ...workout,
+    date: dateToUse,
     exercises: nextExercises,
     totalVolume: calculateWorkoutVolume(nextExercises),
-    prsAchieved: findNewPRs(nextExercises, priorWorkouts, workout.date),
+    prsAchieved: findNewPRs(nextExercises, priorWorkouts, dateToUse),
   };
+}
+
+function toDatetimeLocalValue(isoString: string): string {
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) {
+    return "";
+  }
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const hours = String(d.getHours()).padStart(2, "0");
+  const minutes = String(d.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function fromDatetimeLocalValue(value: string): string {
+  const d = new Date(value);
+  return d.toISOString();
 }
 
 export default function HistoricalWorkoutPage() {
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const [message, setMessage] = useState("");
+  const [editedDate, setEditedDate] = useState<string>("");
   const workouts = useSyncExternalStore(
     subscribeToStorage,
     getWorkouts,
@@ -65,17 +88,21 @@ export default function HistoricalWorkoutPage() {
   );
   const workout = workouts.find((savedWorkout) => savedWorkout.id === params.id);
 
+
+
   const priorWorkouts = useMemo(() => {
     if (!workout) {
       return [];
     }
 
+    const currentWorkoutDate = editedDate || workout.date;
+
     return workouts.filter(
       (savedWorkout) =>
         savedWorkout.id !== workout.id &&
-        new Date(savedWorkout.date).getTime() < new Date(workout.date).getTime(),
+        new Date(savedWorkout.date).getTime() < new Date(currentWorkoutDate).getTime(),
     );
-  }, [workout, workouts]);
+  }, [workout, workouts, editedDate]);
 
   const currentPRs = useMemo(() => {
     const prs: Record<string, PRRecord | undefined> = {};
@@ -93,12 +120,30 @@ export default function HistoricalWorkoutPage() {
     return previousSets;
   }, [priorWorkouts, workout]);
 
+  const allPreviousSetsByExercise = useMemo(() => {
+    const allPrevious: Record<string, { date: string; sets: ExerciseEntry["sets"] }[]> = {};
+    workout?.exercises.forEach((exercise) => {
+      allPrevious[exercise.id] = findAllPreviousSets(priorWorkouts, exercise.name);
+    });
+    return allPrevious;
+  }, [priorWorkouts, workout]);
+
   function updateExercises(exercises: ExerciseEntry[]) {
     if (!workout) {
       return;
     }
 
-    const updatedWorkout = buildUpdatedWorkout(workout, exercises, workouts);
+    const updatedWorkout = buildUpdatedWorkout(workout, exercises, workouts, false, editedDate || workout.date);
+    saveWorkout(updatedWorkout);
+    setMessage("Changes saved on this device.");
+  }
+
+  function updateWorkoutDate(newDate: string) {
+    if (!workout) {
+      return;
+    }
+    setEditedDate(newDate);
+    const updatedWorkout = buildUpdatedWorkout(workout, workout.exercises, workouts, false, newDate);
     saveWorkout(updatedWorkout);
     setMessage("Changes saved on this device.");
   }
@@ -113,6 +158,7 @@ export default function HistoricalWorkoutPage() {
       workout.exercises,
       workouts,
       true,
+      editedDate || workout.date,
     );
     cleanedWorkout.exercises.forEach((exercise) => saveExerciseName(exercise.name));
     saveWorkout(cleanedWorkout);
@@ -167,15 +213,23 @@ export default function HistoricalWorkoutPage() {
           <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
             Edit Workout
           </h1>
-          <p className="mt-1 text-sm font-medium text-slate-500">
-            {new Date(workout.date).toLocaleString(undefined, {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-            })}
-          </p>
+          <div className="mt-2 flex flex-col gap-1">
+            <label htmlFor="workout-date-input" className="text-xs font-black uppercase tracking-wide text-slate-400">
+              Workout Date & Time
+            </label>
+            <input
+              id="workout-date-input"
+              type="datetime-local"
+              value={toDatetimeLocalValue(editedDate || workout.date)}
+              onChange={(e) => {
+                if (e.target.value) {
+                  const newIsoString = fromDatetimeLocalValue(e.target.value);
+                  updateWorkoutDate(newIsoString);
+                }
+              }}
+              className="h-10 w-full max-w-xs rounded-2xl border border-slate-200 bg-white px-3 text-sm font-bold text-slate-800 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 cursor-pointer"
+            />
+          </div>
         </div>
         <button
           type="button"
@@ -200,6 +254,7 @@ export default function HistoricalWorkoutPage() {
             exercise={exercise}
             previousBest={currentPRs[exercise.id]}
             previousSets={previousSetsByExercise[exercise.id]}
+            allPreviousSets={allPreviousSetsByExercise[exercise.id]}
             onChange={(updatedExercise) =>
               updateExercises(
                 workout.exercises.map((item) =>

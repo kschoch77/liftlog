@@ -1,0 +1,120 @@
+Exercise Name,Split Category - Push / Pull / Legs,Split Category - Upper / Lower,Split Category - Bro Split,Plane of Motion,Planar movement,Movement Category,Equipment Type / Area,Body Position,Bilateral / Unilateral,Simultaneous / Alternating,Grip / Attachment Type,Weight Type,Primary Muscle Group,Additional Primary Muscle Group
+Plank,Legs,Lower,Legs,Sagittal,Flexion,Anti-extension,Free Area,Prone,Bilateral,Simultaneous,No Grip,Bodyweight,Abs,
+Ab Wheel,Legs,Lower,Legs,Sagittal,Flexion,Anti-extension,Free Area,Prone,Bilateral,Simultaneous,Pronated,Bodyweight,Abs,
+DB Bicep Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Free Area,Standing,Unilateral,Alternating,Mix,Dumbbell,Biceps,
+EZ Bar Bicep Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Free Area,Standing,Bilateral,Simultaneous,Supinated,Barbell,Biceps,
+DB Incline Bicep Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Bench,Incline,Unilateral,Alternating,Supinated,Dumbbell,Biceps,
+Bayesian Cable Bicep Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Supinated,Stack,Biceps,
+EZ Bar Preacher Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Bench,Seated,Bilateral,Simultaneous,Supinated,Barbell,Biceps,
+Machine Preacher Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Supinated,Stack,Biceps,
+Cable Bicep Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Supinated,Stack,Biceps,
+DB Hammer Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Free Area,Standing,Bilateral,Simultaneous,Neutral,Dumbbell,Biceps,
+Concentration Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Bench,Seated,Unilateral,Alternating,Supinated,Dumbbell,Biceps,
+Calf Raise on Leg Press,Legs,Lower,Legs,Sagittal,Extension,Calf Extension,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,No Grip,Plate,Calves,
+Single-leg Calf Raise on Leg Press,Legs,Lower,Legs,Sagittal,Extension,Calf Extension,Machine - Pin-loaded,Seated,Unilateral,Alternating,No Grip,Plate,Calves,
+Seated Calf Raise,Legs,Lower,Legs,Sagittal,Extension,Calf Extension,Machine - Plate-loaded,Seated,Bilateral,Simultaneous,No Grip,Plate,Calves,
+Standing Calf Raise,Legs,Lower,Legs,Sagittal,Extension,Calf Extension,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,No Grip,Stack,Calves,
+Cable Chest Fly,Push,Upper,Chest,Transverse,Adduction,Chest Fly,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Neutral,Stack,Chest,
+Pec Deck / Machine Chest Fly,Push,Upper,Chest,Transverse,Adduction,Chest Fly,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Chest,
+Flat DB Chest Fly,Push,Upper,Chest,Transverse,Adduction,Chest Fly,Bench,Flat,Bilateral,Simultaneous,Neutral,Dumbbell,Chest,Shoulders
+Flat BB Bench Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Bench,Flat,Bilateral,Simultaneous,Pronated,Barbell,Chest,Shoulders
+Flat DB Bench Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Bench,Flat,Bilateral,Simultaneous,Pronated,Dumbbell,Chest,Shoulders
+Flat Machine Chest Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Machine - Pin-loaded,Flat,Bilateral,Simultaneous,Pronated,Stack,Chest,Shoulders
+Flat Plate-loaded Chest Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Machine - Plate-loaded,Flat,Bilateral,Simultaneous,Pronated,Plate,Chest,Shoulders
+Incline BB Bench Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Bench,Incline,Bilateral,Simultaneous,Pronated,Barbell,Chest,Shoulders
+Incline DB Bench Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Bench,Incline,Bilateral,Simultaneous,Pronated,Dumbbell,Chest,Shoulders
+Incline Machine Chest Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Machine - Pin-loaded,Incline,Bilateral,Simultaneous,Pronated,Stack,Chest,Shoulders
+Incline Plate-loaded Chest Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Machine - Plate-loaded,Incline,Bilateral,Simultaneous,Pronated,Plate,Chest,Shoulders
+Decline BB Bench Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Bench,Decline,Bilateral,Simultaneous,Pronated,Barbell,Chest,Shoulders
+Decline DB Bench Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Bench,Decline,Bilateral,Simultaneous,Pronated,Dumbbell,Chest,Shoulders
+Decline Machine Chest Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Machine - Pin-loaded,Decline,Bilateral,Simultaneous,Pronated,Stack,Chest,Shoulders
+Decline Plate-loaded Chest Press,Push,Upper,Chest,Transverse,Adduction,Chest Press,Machine - Plate-loaded,Decline,Bilateral,Simultaneous,Pronated,Plate,Chest,Shoulders
+Push-up,Push,Upper,Chest,Transverse,Adduction,Chest Press,Free Area,Prone,Bilateral,Simultaneous,Pronated,Bodyweight,Chest,Shoulders
+Close-grip BB Bench Press,Push,Upper,Arms,Transverse,Adduction,Chest Press,Bench,Flat,Bilateral,Simultaneous,Pronated,Barbell,Triceps,
+Machine Hip Abduction,Legs,Lower,Legs,Frontal,Abduction,Hip Abduction,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,No Grip,Stack,Glutes/Hips,
+Machine Hip Adduction,Legs,Lower,Legs,Frontal,Adduction,Hip Adduction,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,No Grip,Stack,Glutes/Hips,
+Cable Glute Kickback,Legs,Lower,Legs,Sagittal,Extension,Hip Extension,Machine - Pin-loaded,Standing,Unilateral,Alternating,No Grip,Stack,Glutes/Hips,
+Back Extension,Legs,Lower,Legs,Sagittal,Extension,Hip Extension,Bench,Other,Bilateral,Simultaneous,No Grip,Bodyweight,Glutes/Hips,
+Hanging Leg Raise,Legs,Lower,Legs,Sagittal,Flexion,Hip Flexion,Rack,Hanging,Bilateral,Simultaneous,No Grip,Bodyweight,Abs,
+Lying Leg Raise / Dragon Flag,Legs,Lower,Legs,Sagittal,Flexion,Hip Flexion,Bench,Flat,Bilateral,Simultaneous,No Grip,Bodyweight,Abs,
+Hanging Knee Raise,Legs,Lower,Legs,Sagittal,Flexion,Hip Flexion,Rack,Hanging,Bilateral,Simultaneous,No Grip,Bodyweight,Abs,
+Deadlift,Legs,Lower,Legs,Sagittal,Extension,Hip Hinge,Rack,Standing,Bilateral,Simultaneous,Mix,Barbell,Glutes/Hips,Hamstrings
+BB Romanian Deadlift / RDL,Legs,Lower,Legs,Sagittal,Extension,Hip Hinge,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Hamstrings,Glutes/Hips
+DB Romanian Deadlift / RDL,Legs,Lower,Legs,Sagittal,Extension,Hip Hinge,Rack,Standing,Bilateral,Simultaneous,Pronated,Dumbbell,Hamstrings,Glutes/Hips
+Single-leg Romanian Deadlift / RDL,Legs,Lower,Legs,Sagittal,Extension,Hip Hinge,Rack,Standing,Unilateral,Alternating,Pronated,Dumbbell,Hamstrings,Glutes/Hips
+Good Morning,Legs,Lower,Legs,Sagittal,Extension,Hip Hinge,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Hamstrings,Glutes/Hips
+BB Hip Thrust,Legs,Lower,Legs,Sagittal,Extension,Hip Thrust,Bench,Seated,Bilateral,Simultaneous,Pronated,Barbell,Glutes/Hips,
+Glute Bridge,Legs,Lower,Legs,Sagittal,Extension,Hip Thrust,Free Area,Flat,Bilateral,Simultaneous,No Grip,Bodyweight,Glutes/Hips,
+Rope Face Pull,Pull,Upper,Shoulders,Transverse,External Rotation,Horizontal Row,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Neutral,Stack,Shoulders,
+Bent-over Single-arm Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Bench,Standing,Unilateral,Alternating,Neutral,Dumbbell,Mid-Back,
+Bent-over BB Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Mid-Back,
+Chest-supported Wide-grip Row,Pull,Upper,Back,Transverse,Adduction,Horizontal Row,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Pronated,Stack,Mid-Back,
+Chest-supported Wide-grip Row,Pull,Upper,Back,Transverse,Adduction,Horizontal Row,Machine - Plate-loaded,Seated,Bilateral,Simultaneous,Pronated,Plate,Mid-Back,
+Chest-supported Narrow-grip Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Mid-Back,
+Chest-supported Narrow-grip Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Machine - Plate-loaded,Seated,Bilateral,Simultaneous,Neutral,Plate,Mid-Back,
+Seated Narrow-grip Cable Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Mid-Back,
+Seated Wide-grip Cable Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Pronated,Stack,Mid-Back,
+Single-arm Cable Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Machine - Pin-loaded,Seated,Unilateral,Alternating,Neutral,Stack,Mid-Back,
+Chest-supported T-Bar Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Machine - Plate-loaded,Standing,Bilateral,Simultaneous,Neutral,Plate,Mid-Back,Lats
+Meadows Row,Pull,Upper,Back,Sagittal,Extension,Horizontal Row,Rack,Standing,Unilateral,Alternating,Pronated,Barbell,Mid-Back,
+Leg Curl,Legs,Lower,Legs,Sagittal,Flexion,Knee Curl,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,No Grip,Stack,Hamstrings,
+Lying Leg Curl,Legs,Lower,Legs,Sagittal,Flexion,Knee Curl,Machine - Pin-loaded,Prone,Bilateral,Simultaneous,No Grip,Stack,Hamstrings,
+Leg Extension,Legs,Lower,Legs,Sagittal,Extension,Knee Extension,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,No Grip,Stack,Quads,
+Plate-loaded Leg Press,Legs,Lower,Legs,Sagittal,Extension,Leg Press,Machine - Plate-loaded,Seated,Bilateral,Simultaneous,No Grip,Plate,Quads,Glutes/Hips
+Pin-loaded Leg Press,Legs,Lower,Legs,Sagittal,Extension,Leg Press,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,No Grip,Stack,Quads,Glutes/Hips
+Single-leg Leg Press,Legs,Lower,Legs,Sagittal,Extension,Leg Press,Machine - Pin-loaded,Seated,Unilateral,Alternating,No Grip,Stack,Quads,Glutes/Hips
+DB Walking Lunge,Legs,Lower,Legs,Sagittal,Flexion,Lunge,Free Area,Standing,Unilateral,Alternating,Neutral,Dumbbell,Quads,Glutes/Hips
+BB Walking Lunge,Legs,Lower,Legs,Sagittal,Flexion,Lunge,Free Area,Standing,Unilateral,Alternating,Neutral,Barbell,Quads,Glutes/Hips
+DB Reverse Lunge,Legs,Lower,Legs,Sagittal,Flexion,Lunge,Free Area,Standing,Unilateral,Alternating,Neutral,Dumbbell,Quads,Glutes/Hips
+BB Reverse Lunge,Legs,Lower,Legs,Sagittal,Flexion,Lunge,Rack,Standing,Unilateral,Alternating,Neutral,Barbell,Quads,Glutes/Hips
+Step-up,Legs,Lower,Legs,Sagittal,Flexion,Lunge,Bench,Standing,Unilateral,Alternating,Neutral,Dumbbell,Quads,Glutes/Hips
+Cable Rear Delt Fly / Reverse Fly,Pull,Upper,Shoulders,Transverse,Abduction,Reverse Fly,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Neutral,Stack,Shoulders,Mid-Back
+Machine Rear Delt Fly / Reverse Pec Deck,Pull,Upper,Shoulders,Transverse,Abduction,Reverse Fly,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Shoulders,Mid-Back
+DB Rear Delt Fly / Reverse Fly,Pull,Upper,Shoulders,Transverse,Abduction,Reverse Fly,Bench,Incline,Bilateral,Simultaneous,Neutral,Dumbbell,Shoulders,Mid-Back
+DB Lateral Raise / Shoulder Fly,Push,Upper,Shoulders,Frontal,Abduction,Shoulder Abduction,Free Area,Standing,Bilateral,Simultaneous,Neutral,Dumbbell,Shoulders,
+Cable Lateral Raise / Shoulder Fly,Push,Upper,Shoulders,Frontal,Abduction,Shoulder Abduction,Machine - Pin-loaded,Standing,Unilateral,Alternating,Neutral,Stack,Shoulders,
+Machine Lateral Raise / Shoulder Fly,Push,Upper,Shoulders,Frontal,Abduction,Shoulder Abduction,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Shoulders,
+DB Pullover,Pull,Upper,Back,Sagittal,Extension,Shoulder Extension,Bench,Flat,Bilateral,Simultaneous,Neutral,Dumbbell,Lats,
+Straight-arm Lat Pull-down,Pull,Upper,Back,Sagittal,Extension,Shoulder Extension,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Pronated,Stack,Lats,
+Seated BB Shoulder Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Rack,Seated,Bilateral,Simultaneous,Pronated,Barbell,Shoulders,
+Seated DB Shoulder Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Bench,Seated,Bilateral,Simultaneous,Neutral,Dumbbell,Shoulders,
+Standing BB Shoulder Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Shoulders,
+Standing DB Shoulder Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Free Area,Standing,Bilateral,Simultaneous,Neutral,Dumbbell,Shoulders,
+Seated Machine Shoulder Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Shoulders,
+Seated Plate-loaded Shoulder Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Machine - Plate-loaded,Seated,Bilateral,Simultaneous,Neutral,Plate,Shoulders,
+Arnold Press,Push,Upper,Shoulders,Sagittal,Flexion,Shoulder Press,Bench,Seated,Bilateral,Simultaneous,Mix,Dumbbell,Shoulders,
+Ab Crunch,Legs,Lower,Legs,Sagittal,Flexion,Spinal Flexion,Free Area,Flat,Bilateral,Simultaneous,No Grip,Bodyweight,Abs,
+Cable Crunch,Legs,Lower,Legs,Sagittal,Flexion,Spinal Flexion,Machine - Pin-loaded,Kneeling,Bilateral,Simultaneous,Neutral,Stack,Abs,
+Machine Crunch,Legs,Lower,Legs,Sagittal,Flexion,Spinal Flexion,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Abs,
+Bulgarian Split Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Bench,Standing,Unilateral,Alternating,Neutral,Dumbbell,Quads,Glutes/Hips
+DB Split Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Free Area,Standing,Unilateral,Alternating,Neutral,Dumbbell,Quads,Glutes/Hips
+BB Back Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Quads,Glutes/Hips
+BB Front Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Quads,Glutes/Hips
+Hack Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Machine - Plate-loaded,Standing,Bilateral,Simultaneous,No Grip,Plate,Quads,Glutes/Hips
+Goblet Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Free Area,Standing,Bilateral,Simultaneous,Neutral,Kettlebell,Quads,Glutes/Hips
+Tricep Pushdown / Extension,Push,Upper,Arms,Sagittal,Extension,Tricep Extension,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Pronated,Stack,Triceps,
+Overhead Cable Tricep Extension,Push,Upper,Arms,Sagittal,Extension,Tricep Extension,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Neutral,Stack,Triceps,
+Skullcrusher / Lying Tricep Extension,Push,Upper,Arms,Sagittal,Extension,Tricep Extension,Bench,Flat,Bilateral,Simultaneous,Pronated,Barbell,Triceps,
+Wide-grip Lat Pull-down,Pull,Upper,Back,Frontal,Adduction,Vertical Pull,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Pronated,Stack,Lats,Mid-Back
+Neutral-grip Lat Pull-down,Pull,Upper,Back,Sagittal,Extension,Vertical Pull,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Neutral,Stack,Lats,Mid-Back
+Single-arm Lat Pull-down / Cable Pull-down,Pull,Upper,Back,Frontal,Adduction,Vertical Pull,Machine - Pin-loaded,Seated,Unilateral,Alternating,Neutral,Stack,Lats,Mid-Back
+Wide-grip Pull-up,Pull,Upper,Back,Frontal,Adduction,Vertical Pull,Rack,Hanging,Bilateral,Simultaneous,Pronated,Bodyweight,Lats,Mid-Back
+Neutral-grip Pull-up,Pull,Upper,Back,Frontal,Adduction,Vertical Pull,Rack,Hanging,Bilateral,Simultaneous,Neutral,Bodyweight,Lats,Mid-Back
+Chin-up / Supinated Pull-up,Pull,Upper,Back,Frontal,Adduction,Vertical Pull,Rack,Hanging,Bilateral,Simultaneous,Supinated,Bodyweight,Lats,Mid-Back
+Single-Arm Preacher Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Bench,Seated,Unilateral,Alternating,Supinated,Dumbbell,Biceps,
+Single-Arm Hammer Preacher Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Bench,Seated,Unilateral,Alternating,Neutral,Dumbbell,Biceps,
+Incline DB Y-Raise,Push,Upper,Shoulders,Frontal,Abduction,Shoulder Abduction,Bench,Incline,Bilateral,Simultaneous,Pronated,Dumbbell,Shoulders,
+Cable Y-Raise,Push,Upper,Shoulders,Frontal,Abduction,Shoulder Abduction,Machine - Pin-loaded,Standing,Unilateral,Alternating,Pronated,Stack,Shoulders,
+Kelso Shrug - Incline DB,Pull,Upper,Back,Sagittal,Extension,Shoulder Extension,Bench,Prone,Bilateral,Simultaneous,Pronated,Dumbbell,Mid-Back,
+Kelso Shrug - Seated Cable,Pull,Upper,Back,Sagittal,Extension,Shoulder Extension,Machine - Pin-loaded,Seated,Bilateral,Simultaneous,Pronated,Stack,Mid-Back,
+Kelso Shrug - T-Bar,Pull,Upper,Back,Sagittal,Extension,Shoulder Extension,Machine - Plate-loaded,Prone,Bilateral,Simultaneous,Pronated,Plate,Mid-Back,
+Sissy Squat,Legs,Lower,Legs,Sagittal,Flexion,Squat,Free Area,Standing,Bilateral,Simultaneous,No Grip,Bodyweight,Quads,
+BB Shrug,Pull,Upper,Shoulders,Frontal,Elevation,Shrug,Rack,Standing,Bilateral,Simultaneous,Pronated,Barbell,Mid-Back,
+DB Shrug,Pull,Upper,Shoulders,Frontal,Elevation,Shrug,Free Area,Standing,Bilateral,Simultaneous,Neutral,Dumbbell,Mid-Back,
+Machine Shrug,Pull,Upper,Shoulders,Frontal,Elevation,Shrug,Machine - Plate-loaded,Standing,Bilateral,Simultaneous,Neutral,Plate,Mid-Back,
+Cable Shrug,Pull,Upper,Shoulders,Frontal,Elevation,Shrug,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Pronated,Stack,Mid-Back,
+Zottman Bicep Curl,Pull,Upper,Arms,Sagittal,Flexion,Bicep Curl,Free Area,Standing,Bilateral,Simultaneous,Mix,Dumbbell,Biceps,
+DB Wrist Curl,Pull,Upper,Arms,Sagittal,Flexion,Wrist Curl,Bench,Seated,Bilateral,Simultaneous,Supinated,Dumbbell,Forearms,
+Cable Wrist Curl,Pull,Upper,Arms,Sagittal,Flexion,Wrist Curl,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Supinated,Stack,Forearms,
+DB Wrist Extension,Pull,Upper,Arms,Sagittal,Extension,Wrist Extension,Bench,Seated,Bilateral,Simultaneous,Pronated,Dumbbell,Forearms,
+Cable Wrist Extension,Pull,Upper,Arms,Sagittal,Extension,Wrist Extension,Machine - Pin-loaded,Standing,Bilateral,Simultaneous,Pronated,Stack,Forearms,
