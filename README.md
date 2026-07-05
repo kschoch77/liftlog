@@ -1,6 +1,6 @@
 # LiftLog
 
-Current version: v1.8
+Current version: v1.9
 
 Live app: https://liftlog-weld.vercel.app/
 
