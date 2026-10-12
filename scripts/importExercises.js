@@ -24,9 +24,15 @@ function parseCSVLine(line) {
 
 function run() {
   const rootDir = path.join(__dirname, '..');
-  let csvPath = path.join(rootDir, 'exercises.csv.csv');
+  let csvPath = path.join(rootDir, 'exercises.csv');
   if (!fs.existsSync(csvPath)) {
-    csvPath = path.join(rootDir, 'exercises.csv');
+    csvPath = path.join(rootDir, 'exercises.csv.csv');
+  } else {
+    // Keep exercises.csv.csv in sync if it exists
+    const backupCsvPath = path.join(rootDir, 'exercises.csv.csv');
+    if (fs.existsSync(backupCsvPath)) {
+      fs.copyFileSync(csvPath, backupCsvPath);
+    }
   }
 
   if (!fs.existsSync(csvPath)) {

@@ -318,6 +318,15 @@ export const exerciseCatalog: ExerciseCatalogEntry[] = [
     "equipment": "Bench"
   },
   {
+    "name": "Cross-Body Lat Pull-Around",
+    "primaryMuscleGroup": "Lats",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Vertical Pull",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
     "name": "DB Bicep Curl",
     "primaryMuscleGroup": "Biceps",
     "additionalPrimaryMuscleGroup": undefined,
@@ -433,6 +442,15 @@ export const exerciseCatalog: ExerciseCatalogEntry[] = [
     "defaultWeightType": "weight",
     "movementCategory": "Wrist Extension",
     "equipment": "Bench"
+  },
+  {
+    "name": "Dead Hang",
+    "primaryMuscleGroup": "Forearms",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Bodyweight",
+    "defaultWeightType": "bodyweight",
+    "movementCategory": "Grip",
+    "equipment": "Rack"
   },
   {
     "name": "Deadlift",
@@ -597,6 +615,15 @@ export const exerciseCatalog: ExerciseCatalogEntry[] = [
     "equipment": "Rack"
   },
   {
+    "name": "High Cable Lateral Raise / Shoulder Fly",
+    "primaryMuscleGroup": "Shoulders",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Shoulder Abduction",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
     "name": "Incline BB Bench Press",
     "primaryMuscleGroup": "Chest",
     "additionalPrimaryMuscleGroup": "Shoulders",
@@ -667,6 +694,15 @@ export const exerciseCatalog: ExerciseCatalogEntry[] = [
     "defaultWeightType": "weight",
     "movementCategory": "Shoulder Extension",
     "equipment": "Machine - Plate-loaded"
+  },
+  {
+    "name": "Kneeling Single-arm Lat Pull-down / Cable Pull-down",
+    "primaryMuscleGroup": "Lats",
+    "additionalPrimaryMuscleGroup": "Mid-Back",
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Vertical Pull",
+    "equipment": "Machine - Pin-loaded"
   },
   {
     "name": "Leg Curl",
@@ -855,6 +891,15 @@ export const exerciseCatalog: ExerciseCatalogEntry[] = [
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Horizontal Row",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "SA Cable Tricep Pushdown / Extension",
+    "primaryMuscleGroup": "Triceps",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Tricep Extension",
     "equipment": "Machine - Pin-loaded"
   },
   {
