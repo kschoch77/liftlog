@@ -11,6 +11,7 @@ import {
   findNewPRs,
   findPreviousBest,
   findPreviousSets,
+  findPreviousSetupNote,
   findAllPreviousSets,
 } from "@/lib/calculations";
 import {
@@ -41,6 +42,9 @@ function buildUpdatedWorkout(
     .map((exercise) => ({
       ...exercise,
       name: cleanHistory ? exercise.name.trim() : exercise.name,
+      setupNote: cleanHistory
+        ? exercise.setupNote?.trim() || undefined
+        : exercise.setupNote,
       sets: cleanHistory
         ? exercise.sets.filter((set) => set.completed || Boolean(set.note?.trim()))
         : exercise.sets,
@@ -120,8 +124,22 @@ export default function HistoricalWorkoutPage() {
     return previousSets;
   }, [priorWorkouts, workout]);
 
+  const previousSetupByExercise = useMemo(() => {
+    const previousSetups: Record<string, string | undefined> = {};
+    workout?.exercises.forEach((exercise) => {
+      previousSetups[exercise.id] = findPreviousSetupNote(
+        priorWorkouts,
+        exercise.name,
+      );
+    });
+    return previousSetups;
+  }, [priorWorkouts, workout]);
+
   const allPreviousSetsByExercise = useMemo(() => {
-    const allPrevious: Record<string, { date: string; sets: ExerciseEntry["sets"] }[]> = {};
+    const allPrevious: Record<
+      string,
+      { date: string; sets: ExerciseEntry["sets"]; setupNote?: string }[]
+    > = {};
     workout?.exercises.forEach((exercise) => {
       allPrevious[exercise.id] = findAllPreviousSets(priorWorkouts, exercise.name);
     });
@@ -254,6 +272,7 @@ export default function HistoricalWorkoutPage() {
             exercise={exercise}
             previousBest={currentPRs[exercise.id]}
             previousSets={previousSetsByExercise[exercise.id]}
+            previousSetupNote={previousSetupByExercise[exercise.id]}
             allPreviousSets={allPreviousSetsByExercise[exercise.id]}
             onChange={(updatedExercise) =>
               updateExercises(

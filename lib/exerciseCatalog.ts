@@ -1011,12 +1011,39 @@ export const exerciseCatalog: ExerciseCatalogEntry[] = [
     "equipment": "Machine - Pin-loaded"
   },
   {
+    "name": "Single-Leg Leg Curl",
+    "primaryMuscleGroup": "Hamstrings",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Knee Curl",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Single-Leg Leg Extension",
+    "primaryMuscleGroup": "Quads",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Knee Extension",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
     "name": "Single-leg Leg Press",
     "primaryMuscleGroup": "Quads",
     "additionalPrimaryMuscleGroup": "Glutes/Hips",
     "sourceWeightType": "Stack",
     "defaultWeightType": "weight",
     "movementCategory": "Leg Press",
+    "equipment": "Machine - Pin-loaded"
+  },
+  {
+    "name": "Single-Leg Lying Leg Curl",
+    "primaryMuscleGroup": "Hamstrings",
+    "additionalPrimaryMuscleGroup": undefined,
+    "sourceWeightType": "Stack",
+    "defaultWeightType": "weight",
+    "movementCategory": "Knee Curl",
     "equipment": "Machine - Pin-loaded"
   },
   {

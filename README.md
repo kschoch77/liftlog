@@ -1,6 +1,6 @@
 # LiftLog
 
-Current version: v1.9.1
+Current version: v1.10.0
 
 Live app: https://liftlog-weld.vercel.app/
 
@@ -34,7 +34,8 @@ template folders, and workout templates to Supabase.
 - Add exercises and working sets
 - Mark sets complete or incomplete
 - Mark warm-up sets
-- Track weight, reps, RIR, and notes
+- Track decimal weights, partial reps, RIR, and per-set notes
+- Save collapsible per-exercise setup/adjustment notes (e.g. cable height or seat pin) with automatic recall from prior sessions and templates
 - Support weight, bodyweight, assistance, and band set types
 - Show the bar-weight tracking checkbox only for mapped barbell exercises
 - Keep bar-weight tracking as a reminder of how the set weight was logged

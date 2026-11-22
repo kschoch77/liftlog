@@ -59,12 +59,77 @@ function formatPreviousSet(set?: SetEntry) {
   return `${weightLabel} x ${set.reps}${rirLabel}`;
 }
 
-function numberFromInput(value: string) {
-  return value === "" ? 0 : Number(value);
+function formatNumericValue(value: number | undefined, allowZero: boolean) {
+  if (value === undefined) {
+    return "";
+  }
+
+  if (!allowZero && value === 0) {
+    return "";
+  }
+
+  return String(value);
 }
 
-function optionalNumberFromInput(value: string) {
-  return value === "" ? undefined : Number(value);
+type DecimalInputProps = {
+  id: string;
+  placeholder: string;
+  value: number | undefined;
+  allowZero?: boolean;
+  onValueChange: (value: number | undefined) => void;
+  className: string;
+};
+
+function DecimalInput({
+  id,
+  placeholder,
+  value,
+  allowZero = false,
+  onValueChange,
+  className,
+}: DecimalInputProps) {
+  const [isFocused, setIsFocused] = useState(false);
+  const [draft, setDraft] = useState("");
+  const displayValue = isFocused
+    ? draft
+    : formatNumericValue(value, allowZero);
+
+  return (
+    <input
+      id={id}
+      inputMode="decimal"
+      type="text"
+      placeholder={placeholder}
+      value={displayValue}
+      onFocus={() => {
+        setDraft(formatNumericValue(value, allowZero));
+        setIsFocused(true);
+      }}
+      onBlur={() => {
+        setIsFocused(false);
+      }}
+      onChange={(event) => {
+        const nextRaw = event.target.value;
+
+        if (!/^\d*\.?\d*$/.test(nextRaw)) {
+          return;
+        }
+
+        setDraft(nextRaw);
+
+        if (nextRaw === "" || nextRaw === ".") {
+          onValueChange(undefined);
+          return;
+        }
+
+        const parsed = Number(nextRaw);
+        if (Number.isFinite(parsed)) {
+          onValueChange(parsed);
+        }
+      }}
+      className={className}
+    />
+  );
 }
 
 export function SetRow({
@@ -194,15 +259,12 @@ export function SetRow({
         <label className="sr-only" htmlFor={`${set.id}-reps`}>
           Reps
         </label>
-        <input
+        <DecimalInput
           id={`${set.id}-reps`}
-          inputMode="numeric"
-          pattern="[0-9]*"
-          type="text"
           placeholder="reps"
-          value={set.reps || ""}
-          onChange={(event) =>
-            onChange({ ...set, reps: numberFromInput(event.target.value) })
+          value={set.reps}
+          onValueChange={(nextReps) =>
+            onChange({ ...set, reps: nextReps ?? 0 })
           }
           className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
         />
@@ -214,17 +276,14 @@ export function SetRow({
             <label className="sr-only" htmlFor={`${set.id}-weight`}>
               Pounds
             </label>
-            <input
+            <DecimalInput
               id={`${set.id}-weight`}
-              inputMode="decimal"
-              pattern="[0-9]*"
-              type="text"
               placeholder={weightType === "assistance" ? "-lbs" : "lbs"}
-              value={set.weight || ""}
-              onChange={(event) =>
+              value={set.weight}
+              onValueChange={(nextWeight) =>
                 onChange({
                   ...set,
-                  weight: numberFromInput(event.target.value),
+                  weight: nextWeight ?? 0,
                   isPR: false,
                 })
               }
@@ -235,17 +294,15 @@ export function SetRow({
                 <label className="sr-only" htmlFor={`${set.id}-rir`}>
                   Reps in reserve
                 </label>
-                <input
+                <DecimalInput
                   id={`${set.id}-rir`}
-                  inputMode="decimal"
-                  pattern="[0-9]*"
-                  type="text"
                   placeholder="RIR"
-                  value={set.rir ?? ""}
-                  onChange={(event) =>
+                  value={set.rir}
+                  allowZero
+                  onValueChange={(nextRir) =>
                     onChange({
                       ...set,
-                      rir: optionalNumberFromInput(event.target.value),
+                      rir: nextRir,
                     })
                   }
                   className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
@@ -305,17 +362,15 @@ export function SetRow({
               <label className="sr-only" htmlFor={`${set.id}-band-rir`}>
                 Reps in reserve
               </label>
-              <input
+              <DecimalInput
                 id={`${set.id}-band-rir`}
-                inputMode="decimal"
-                pattern="[0-9]*"
-                type="text"
                 placeholder="RIR"
-                value={set.rir ?? ""}
-                onChange={(event) =>
+                value={set.rir}
+                allowZero
+                onValueChange={(nextRir) =>
                   onChange({
                     ...set,
-                    rir: optionalNumberFromInput(event.target.value),
+                    rir: nextRir,
                   })
                 }
                 className="h-10 w-full rounded-xl border border-slate-200 bg-white px-2 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
@@ -330,17 +385,15 @@ export function SetRow({
           <label className="sr-only" htmlFor={`${set.id}-bodyweight-rir`}>
             Reps in reserve
           </label>
-          <input
+          <DecimalInput
             id={`${set.id}-bodyweight-rir`}
-            inputMode="decimal"
-            pattern="[0-9]*"
-            type="text"
             placeholder="RIR"
-            value={set.rir ?? ""}
-            onChange={(event) =>
+            value={set.rir}
+            allowZero
+            onValueChange={(nextRir) =>
               onChange({
                 ...set,
-                rir: optionalNumberFromInput(event.target.value),
+                rir: nextRir,
               })
             }
             className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-center font-semibold outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"

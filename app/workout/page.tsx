@@ -11,6 +11,7 @@ import {
   findNewPRs,
   findPreviousBest,
   findPreviousSets,
+  findPreviousSetupNote,
   findAllPreviousSets,
 } from "@/lib/calculations";
 import type { ExerciseCatalogEntry } from "@/lib/exerciseCatalog";
@@ -82,6 +83,7 @@ function sanitizeDraftExercises(exercises: ExerciseEntry[]) {
     .map((exercise) => ({
       ...exercise,
       name: exercise.name.trim(),
+      setupNote: exercise.setupNote?.trim() || undefined,
       sets: exercise.sets.map(sanitizeDraftSet),
     }));
 }
@@ -126,8 +128,22 @@ export default function WorkoutPage() {
     return previousSets;
   }, [exercises, savedWorkouts]);
 
+  const previousSetupByExercise = useMemo(() => {
+    const previousSetups: Record<string, string | undefined> = {};
+    exercises.forEach((exercise) => {
+      previousSetups[exercise.id] = findPreviousSetupNote(
+        savedWorkouts,
+        exercise.name,
+      );
+    });
+    return previousSetups;
+  }, [exercises, savedWorkouts]);
+
   const allPreviousSetsByExercise = useMemo(() => {
-    const allPrevious: Record<string, { date: string; sets: ExerciseEntry["sets"] }[]> = {};
+    const allPrevious: Record<
+      string,
+      { date: string; sets: ExerciseEntry["sets"]; setupNote?: string }[]
+    > = {};
     exercises.forEach((exercise) => {
       allPrevious[exercise.id] = findAllPreviousSets(savedWorkouts, exercise.name);
     });
@@ -166,6 +182,7 @@ export default function WorkoutPage() {
       .map((exercise) => ({
         ...exercise,
         name: exercise.name.trim(),
+        setupNote: exercise.setupNote?.trim() || undefined,
         sets: exercise.sets.filter(
           (set) => set.completed || Boolean(set.note?.trim()),
         ),
@@ -291,6 +308,7 @@ export default function WorkoutPage() {
               exercise={exercise}
               previousBest={currentPRs[exercise.id]}
               previousSets={previousSetsByExercise[exercise.id]}
+              previousSetupNote={previousSetupByExercise[exercise.id]}
               allPreviousSets={allPreviousSetsByExercise[exercise.id]}
               onChange={(updatedExercise) =>
                 updateExercises(

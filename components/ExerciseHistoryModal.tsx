@@ -7,7 +7,7 @@ type ExerciseHistoryModalProps = {
   isOpen: boolean;
   onClose: () => void;
   exerciseName: string;
-  history: { date: string; sets: SetEntry[] }[];
+  history: { date: string; sets: SetEntry[]; setupNote?: string }[];
 };
 
 function formatWorkoutDate(dateString: string) {
@@ -102,6 +102,11 @@ export function ExerciseHistoryModal({
                 <h3 className="text-sm font-black text-slate-950">
                   {formatWorkoutDate(item.date)}
                 </h3>
+                {item.setupNote ? (
+                  <p className="mt-1 inline-flex items-center rounded-lg bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700">
+                    Setup: {item.setupNote}
+                  </p>
+                ) : null}
                 <ul className="mt-2 space-y-1.5">
                   {item.sets.map((set, setIdx) => {
                     const setLabel = set.isWarmup ? "W" : `Set ${item.sets.slice(0, setIdx + 1).filter(s => !s.isWarmup).length}`;

@@ -68,7 +68,7 @@ function run() {
 
   for (let i = 1; i < lines.length; i++) {
     const cols = parseCSVLine(lines[i]);
-    if (cols.length < headers.length) {
+    if (cols.length <= Math.max(nameIdx, primaryMuscleIdx, weightTypeIdx)) {
       // Skip empty or malformed rows
       continue;
     }

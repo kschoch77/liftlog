@@ -55,6 +55,7 @@ export type ExerciseEntry = {
   name: string;
   primaryMuscleGroup?: MuscleGroup;
   additionalPrimaryMuscleGroup?: MuscleGroup;
+  setupNote?: string;
   sets: SetEntry[];
 };
 

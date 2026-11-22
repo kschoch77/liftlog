@@ -92,6 +92,7 @@ function cleanTemplateExercises(exercises: ExerciseEntry[]) {
     .map((exercise) => ({
       ...exercise,
       name: exercise.name.trim(),
+      setupNote: exercise.setupNote?.trim() || undefined,
       sets: exercise.sets.map((set) => ({
         ...set,
         isPR: false,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, SlidersHorizontal, Trash2 } from "lucide-react";
 import { SetRow } from "@/components/SetRow";
 import { ExerciseHistoryModal } from "@/components/ExerciseHistoryModal";
 import { countsTowardWeightMetrics, estimateOneRepMax } from "@/lib/calculations";
@@ -19,7 +19,8 @@ type ExerciseCardProps = {
   exercise: ExerciseEntry;
   previousBest?: PRRecord;
   previousSets?: SetEntry[];
-  allPreviousSets?: { date: string; sets: SetEntry[] }[];
+  previousSetupNote?: string;
+  allPreviousSets?: { date: string; sets: SetEntry[]; setupNote?: string }[];
   onChange: (exercise: ExerciseEntry) => void;
   onRemove: () => void;
 };
@@ -59,12 +60,24 @@ export function ExerciseCard({
   exercise,
   previousBest,
   previousSets = [],
+  previousSetupNote,
   allPreviousSets = [],
   onChange,
   onRemove,
 }: ExerciseCardProps) {
   const isBarbellExercise = isBarbellExerciseName(exercise.name);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isSetupOpen, setIsSetupOpen] = useState(false);
+
+  const currentSetupNote = exercise.setupNote?.trim() ?? "";
+  const displayedSetupNote = currentSetupNote || previousSetupNote || "";
+
+  function toggleSetupNote() {
+    if (!isSetupOpen && exercise.setupNote === undefined && previousSetupNote) {
+      onChange({ ...exercise, setupNote: previousSetupNote });
+    }
+    setIsSetupOpen((current) => !current);
+  }
 
   function updateSet(updatedSet: SetEntry) {
     const normalizedSet = normalizeBarWeightFields(
@@ -134,6 +147,49 @@ export function ExerciseCard({
               ? `Best: ${previousBest.weight} x ${previousBest.reps} (${previousBest.estimatedOneRepMax} est. 1RM)`
               : "No PR yet"}
           </p>
+          <div className="mt-2">
+            <button
+              type="button"
+              onClick={toggleSetupNote}
+              aria-expanded={isSetupOpen}
+              className={`inline-flex max-w-full items-center gap-1.5 rounded-xl border px-2.5 py-1 text-xs font-bold transition cursor-pointer ${
+                displayedSetupNote
+                  ? "border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100"
+                  : "border-slate-200 bg-slate-50 text-slate-500 hover:bg-slate-100"
+              }`}
+            >
+              <SlidersHorizontal size={13} className="shrink-0" />
+              <span className="truncate">
+                {displayedSetupNote
+                  ? `Setup: ${displayedSetupNote}`
+                  : "Setup / Adjustment"}
+              </span>
+            </button>
+            {isSetupOpen ? (
+              <div className="mt-2">
+                <label className="sr-only" htmlFor={`${exercise.id}-setup-note`}>
+                  Machine or cable adjustment
+                </label>
+                <input
+                  id={`${exercise.id}-setup-note`}
+                  type="text"
+                  placeholder={
+                    previousSetupNote
+                      ? `Last: ${previousSetupNote}`
+                      : "e.g. Cable height 12, Seat pin 4"
+                  }
+                  value={exercise.setupNote ?? ""}
+                  onChange={(event) =>
+                    onChange({
+                      ...exercise,
+                      setupNote: event.target.value,
+                    })
+                  }
+                  className="h-10 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm font-medium text-slate-800 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
+            ) : null}
+          </div>
           <label
             className="mt-3 block text-xs font-black uppercase tracking-wide text-slate-400"
             htmlFor={`${exercise.id}-muscle-group`}

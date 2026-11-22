@@ -113,8 +113,12 @@ function getTrailingSevenDayWorkouts(
   });
 }
 
+function roundToTwoDecimals(value: number) {
+  return Math.round(value * 100) / 100;
+}
+
 export function calculateWorkoutVolume(exercises: ExerciseEntry[]) {
-  return exercises.reduce((workoutTotal, exercise) => {
+  const total = exercises.reduce((workoutTotal, exercise) => {
     const exerciseVolume = exercise.sets.reduce((setTotal, set) => {
       if (!countsTowardWeightMetrics(set)) {
         return setTotal;
@@ -125,6 +129,8 @@ export function calculateWorkoutVolume(exercises: ExerciseEntry[]) {
 
     return workoutTotal + exerciseVolume;
   }, 0);
+
+  return roundToTwoDecimals(total);
 }
 
 export function calculateWorkoutHardSetCount(workout: Workout) {
@@ -299,10 +305,30 @@ export function findPreviousSets(
   );
 }
 
+export function findPreviousSetupNote(
+  workouts: Workout[],
+  exerciseName: string,
+): string | undefined {
+  const normalizedName = exerciseName.toLowerCase();
+
+  for (const workout of workouts) {
+    const matchingExercise = workout.exercises.find(
+      (exercise) => exercise.name.toLowerCase() === normalizedName,
+    );
+    const trimmedNote = matchingExercise?.setupNote?.trim();
+
+    if (trimmedNote) {
+      return trimmedNote;
+    }
+  }
+
+  return undefined;
+}
+
 export function findAllPreviousSets(
   workouts: Workout[],
   exerciseName: string,
-): { date: string; sets: SetEntry[] }[] {
+): { date: string; sets: SetEntry[]; setupNote?: string }[] {
   const normalizedName = exerciseName.toLowerCase();
   return workouts
     .filter((workout) =>
@@ -317,6 +343,7 @@ export function findAllPreviousSets(
       return {
         date: workout.date,
         sets: exercise?.sets ?? [],
+        setupNote: exercise?.setupNote?.trim() || undefined,
       };
     });
 }
@@ -493,7 +520,7 @@ export function getCurrentWeekMuscleGroupVolume(workouts: Workout[]) {
 
   return muscleGroups.map((group) => ({
     group,
-    volume: totals.get(group) ?? 0,
+    volume: roundToTwoDecimals(totals.get(group) ?? 0),
   }));
 }
 
@@ -553,11 +580,21 @@ export function calculateMuscleGroupFrequency(
     });
   });
 
-  return muscleGroups.map((group) => stats.get(group) ?? {
-    group,
-    hardSets: 0,
-    volume: 0,
-    sessions: 0,
+  return muscleGroups.map((group) => {
+    const groupStats = stats.get(group);
+    if (!groupStats) {
+      return {
+        group,
+        hardSets: 0,
+        volume: 0,
+        sessions: 0,
+      };
+    }
+
+    return {
+      ...groupStats,
+      volume: roundToTwoDecimals(groupStats.volume),
+    };
   });
 }
 
@@ -623,7 +660,7 @@ export function calculateBestSetsByRepTarget(
               .filter(
                 (set) =>
                   countsTowardWeightMetrics(set) &&
-                  set.reps === repTarget,
+                  Math.floor(set.reps) === repTarget,
               )
               .map((set) => ({
                 weight: getEffectiveSetWeight(set),
